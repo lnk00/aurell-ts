@@ -11,8 +11,8 @@ function RouteComponent() {
 	return (
 		<div className="flex flex-col gap-2 items-center justify-center h-screen">
 			<h1>WELCOME TO FIQO</h1>
-			<h1>{data?.name}</h1>
-			<h2>{data?.version}</h2>
+			<h2>name: {data?.name}</h2>
+			<h3>version: {data?.version}</h3>
 		</div>
 	);
 }
