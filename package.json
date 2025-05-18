@@ -1,0 +1,13 @@
+{
+	"name": "fiqo",
+	"version": "0.0.1",
+	"author": "Damien Dumontet",
+	"devDependencies": {
+		"@types/bun": "latest"
+	},
+	"peerDependencies": {
+		"typescript": "^5"
+	},
+	"scripts": {},
+	"workspaces": ["packages/*"]
+}
