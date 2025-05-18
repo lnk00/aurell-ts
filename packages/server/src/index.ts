@@ -1,6 +1,8 @@
 import { Hono } from 'hono';
+import { corsMiddleware } from './features/core/middlewares/cors.middleware';
 
 const app = new Hono();
+app.use('*', corsMiddleware);
 
 const routes = app.get('/api', (c) =>
 	c.json(
