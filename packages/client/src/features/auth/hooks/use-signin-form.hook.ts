@@ -4,9 +4,7 @@ import z from 'zod/v4';
 export function useSigninForm() {
 	const form = useForm({
 		defaultValues: { email: '' },
-		onSubmit: async ({ value }) => {
-			console.log(value);
-		},
+		onSubmit: async () => {},
 		validators: {
 			onSubmit: ({ value }) => {
 				try {
