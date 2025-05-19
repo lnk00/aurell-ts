@@ -5,7 +5,7 @@ export function useApiVersion() {
 	return useQuery({
 		queryKey: ['API_VERSION'],
 		queryFn: async () => {
-			const res = await rpcClient.api.$get();
+			const res = await rpcClient.api.core.infos.$get();
 			return await res.json();
 		},
 	});
