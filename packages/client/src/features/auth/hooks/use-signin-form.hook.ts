@@ -21,12 +21,12 @@ export function useSigninForm() {
 
 	// TODO: Implement Google signin
 	const handleGoogleSignin = () => {
-		throw 'Implement Google signin';
+		throw 'Google signin not implemented';
 	};
 
 	// TODO: Implement Apple signin
 	const handleAppleSignin = () => {
-		throw 'Implement Apple signin';
+		throw 'Apple signin not implemented';
 	};
 
 	return { form, handleGoogleSignin, handleAppleSignin };
