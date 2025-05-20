@@ -1,10 +1,22 @@
+import { useStytch } from '@stytch/react';
 import { useForm } from '@tanstack/react-form';
 import z from 'zod/v4';
 
 export function useSigninForm() {
+	const stytch = useStytch();
+
 	const form = useForm({
 		defaultValues: { email: '' },
-		onSubmit: async () => {},
+		onSubmit: async ({ value }) => {
+			stytch.magicLinks.email.loginOrCreate(value.email, {
+				login_magic_link_url:
+					window.location.origin + import.meta.env.VITE_MAGIC_LINK_CB_URL,
+				login_expiration_minutes: 60,
+				signup_magic_link_url:
+					window.location.origin + import.meta.env.VITE_MAGIC_LINK_CB_URL,
+				signup_expiration_minutes: 60,
+			});
+		},
 		validators: {
 			onSubmit: ({ value }) => {
 				try {
