@@ -1,8 +1,9 @@
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
-
-import * as TanStackQueryProvider from './providers/query.tsx';
+import * as TanStackQueryProvider from './providers/query.provider';
+import * as StytchProvider from './providers/stytch.provider';
+import * as CookieProvider from './providers/cookie.provider';
 
 // Import the generated route tree
 import { routeTree } from './routeTree.gen';
@@ -35,9 +36,13 @@ if (rootElement && !rootElement.innerHTML) {
 	const root = ReactDOM.createRoot(rootElement);
 	root.render(
 		<StrictMode>
-			<TanStackQueryProvider.Provider>
-				<RouterProvider router={router} />
-			</TanStackQueryProvider.Provider>
+			<CookieProvider.Provider>
+				<StytchProvider.Provider>
+					<TanStackQueryProvider.Provider>
+						<RouterProvider router={router} />
+					</TanStackQueryProvider.Provider>
+				</StytchProvider.Provider>
+			</CookieProvider.Provider>
 		</StrictMode>,
 	);
 }

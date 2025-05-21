@@ -11,20 +11,34 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as SigninImport } from './routes/signin'
 import { Route as IndexImport } from './routes/index'
+import { Route as AuthSigninImport } from './routes/auth/signin'
+import { Route as AuthMagiclinkConfirmationImport } from './routes/auth/magiclink/confirmation'
+import { Route as AuthMagiclinkAuthenticateImport } from './routes/auth/magiclink/authenticate'
 
 // Create/Update Routes
-
-const SigninRoute = SigninImport.update({
-  id: '/signin',
-  path: '/signin',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthSigninRoute = AuthSigninImport.update({
+  id: '/auth/signin',
+  path: '/auth/signin',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthMagiclinkConfirmationRoute = AuthMagiclinkConfirmationImport.update({
+  id: '/auth/magiclink/confirmation',
+  path: '/auth/magiclink/confirmation',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthMagiclinkAuthenticateRoute = AuthMagiclinkAuthenticateImport.update({
+  id: '/auth/magiclink/authenticate',
+  path: '/auth/magiclink/authenticate',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -39,11 +53,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/signin': {
-      id: '/signin'
-      path: '/signin'
-      fullPath: '/signin'
-      preLoaderRoute: typeof SigninImport
+    '/auth/signin': {
+      id: '/auth/signin'
+      path: '/auth/signin'
+      fullPath: '/auth/signin'
+      preLoaderRoute: typeof AuthSigninImport
+      parentRoute: typeof rootRoute
+    }
+    '/auth/magiclink/authenticate': {
+      id: '/auth/magiclink/authenticate'
+      path: '/auth/magiclink/authenticate'
+      fullPath: '/auth/magiclink/authenticate'
+      preLoaderRoute: typeof AuthMagiclinkAuthenticateImport
+      parentRoute: typeof rootRoute
+    }
+    '/auth/magiclink/confirmation': {
+      id: '/auth/magiclink/confirmation'
+      path: '/auth/magiclink/confirmation'
+      fullPath: '/auth/magiclink/confirmation'
+      preLoaderRoute: typeof AuthMagiclinkConfirmationImport
       parentRoute: typeof rootRoute
     }
   }
@@ -53,37 +81,60 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/signin': typeof SigninRoute
+  '/auth/signin': typeof AuthSigninRoute
+  '/auth/magiclink/authenticate': typeof AuthMagiclinkAuthenticateRoute
+  '/auth/magiclink/confirmation': typeof AuthMagiclinkConfirmationRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/signin': typeof SigninRoute
+  '/auth/signin': typeof AuthSigninRoute
+  '/auth/magiclink/authenticate': typeof AuthMagiclinkAuthenticateRoute
+  '/auth/magiclink/confirmation': typeof AuthMagiclinkConfirmationRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/signin': typeof SigninRoute
+  '/auth/signin': typeof AuthSigninRoute
+  '/auth/magiclink/authenticate': typeof AuthMagiclinkAuthenticateRoute
+  '/auth/magiclink/confirmation': typeof AuthMagiclinkConfirmationRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/signin'
+  fullPaths:
+    | '/'
+    | '/auth/signin'
+    | '/auth/magiclink/authenticate'
+    | '/auth/magiclink/confirmation'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/signin'
-  id: '__root__' | '/' | '/signin'
+  to:
+    | '/'
+    | '/auth/signin'
+    | '/auth/magiclink/authenticate'
+    | '/auth/magiclink/confirmation'
+  id:
+    | '__root__'
+    | '/'
+    | '/auth/signin'
+    | '/auth/magiclink/authenticate'
+    | '/auth/magiclink/confirmation'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  SigninRoute: typeof SigninRoute
+  AuthSigninRoute: typeof AuthSigninRoute
+  AuthMagiclinkAuthenticateRoute: typeof AuthMagiclinkAuthenticateRoute
+  AuthMagiclinkConfirmationRoute: typeof AuthMagiclinkConfirmationRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  SigninRoute: SigninRoute,
+  AuthSigninRoute: AuthSigninRoute,
+  AuthMagiclinkAuthenticateRoute: AuthMagiclinkAuthenticateRoute,
+  AuthMagiclinkConfirmationRoute: AuthMagiclinkConfirmationRoute,
 }
 
 export const routeTree = rootRoute
@@ -97,14 +148,22 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/signin"
+        "/auth/signin",
+        "/auth/magiclink/authenticate",
+        "/auth/magiclink/confirmation"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/signin": {
-      "filePath": "signin.tsx"
+    "/auth/signin": {
+      "filePath": "auth/signin.tsx"
+    },
+    "/auth/magiclink/authenticate": {
+      "filePath": "auth/magiclink/authenticate.tsx"
+    },
+    "/auth/magiclink/confirmation": {
+      "filePath": "auth/magiclink/confirmation.tsx"
     }
   }
 }

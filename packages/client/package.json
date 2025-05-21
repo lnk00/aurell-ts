@@ -13,6 +13,9 @@
 		"check": "biome check"
 	},
 	"dependencies": {
+		"@heroicons/react": "^2.2.0",
+		"@stytch/react": "^19.5.2",
+		"@stytch/vanilla-js": "^5.24.0",
 		"@tailwindcss/vite": "^4.0.6",
 		"@tanstack/react-form": "^1.0.0",
 		"@tanstack/react-query": "^5.66.5",
@@ -23,7 +26,9 @@
 		"@tanstack/router-plugin": "^1.114.3",
 		"@tanstack/store": "^0.7.0",
 		"hono": "^4.7.10",
+		"inversify": "^7.5.1",
 		"react": "^19.0.0",
+		"react-cookie": "^8.0.1",
 		"react-dom": "^19.0.0",
 		"tailwindcss": "^4.0.6",
 		"zod": "^3.25.3"
