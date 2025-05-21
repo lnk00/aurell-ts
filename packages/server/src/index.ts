@@ -4,6 +4,8 @@ import coreHandlers from './features/core/handlers';
 
 export type Bindings = {
 	DB: D1Database;
+	STYTCH_PROJECT_ID: string;
+	STYTCH_SECRET: string;
 };
 
 const app = new Hono<{ Bindings: Bindings }>();
