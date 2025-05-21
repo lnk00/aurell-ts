@@ -27,6 +27,7 @@
 		"hono": "^4.7.10",
 		"inversify": "^7.5.1",
 		"react": "^19.0.0",
+		"react-cookie": "^8.0.1",
 		"react-dom": "^19.0.0",
 		"tailwindcss": "^4.0.6",
 		"zod": "^3.25.3"
