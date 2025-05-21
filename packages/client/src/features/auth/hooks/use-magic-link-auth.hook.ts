@@ -1,13 +1,14 @@
-import { useStytch } from '@stytch/react';
+import { getService } from '@/libs/ioc.lib';
 import { useNavigate } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 
 export function useMagicLinkAuth() {
-	const stytch = useStytch();
 	const navigate = useNavigate();
 	const [error, setError] = useState<string | null>(null);
 	const [isLoading, setIsLoading] = useState(true);
+	const magicLinkService = getService('magiclink');
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		const authenticateToken = async () => {
 			try {
@@ -18,11 +19,9 @@ export function useMagicLinkAuth() {
 					throw new Error('No authentication token found in URL.');
 				}
 
-				const response = await stytch.magicLinks.authenticate(token, {
-					session_duration_minutes: 60,
-				});
+				const userId = await magicLinkService.authenticate(token);
 
-				if (response.status_code === 200) {
+				if (userId) {
 					setError(null);
 					setIsLoading(false);
 					setTimeout(() => navigate({ to: '/' }), 3000);
@@ -36,7 +35,7 @@ export function useMagicLinkAuth() {
 		};
 
 		authenticateToken();
-	}, [stytch, navigate]);
+	}, []);
 
 	return { error, isLoading };
 }

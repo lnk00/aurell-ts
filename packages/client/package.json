@@ -25,6 +25,7 @@
 		"@tanstack/router-plugin": "^1.114.3",
 		"@tanstack/store": "^0.7.0",
 		"hono": "^4.7.10",
+		"inversify": "^7.5.1",
 		"react": "^19.0.0",
 		"react-dom": "^19.0.0",
 		"tailwindcss": "^4.0.6",
