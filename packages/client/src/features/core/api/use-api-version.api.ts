@@ -3,16 +3,17 @@ import { useQuery } from '@tanstack/react-query';
 import { useCookies } from 'react-cookie';
 
 export function useApiVersion() {
-	const [cookies] = useCookies(['stytch_session_jwt']);
+	const QUERY_KEY = 'API_VERSION';
+	const [{ stytch_session_jwt }] = useCookies(['stytch_session_jwt']);
 
 	return useQuery({
-		queryKey: ['API_VERSION'],
+		queryKey: [QUERY_KEY],
 		queryFn: async () => {
 			const res = await rpcClient.api.core.infos.$get(
 				{},
 				{
 					headers: {
-						Authorization: `Bearer ${cookies.stytch_session_jwt}`,
+						Authorization: `Bearer ${stytch_session_jwt}`,
 					},
 				},
 			);
