@@ -1,5 +1,4 @@
 import { Hono } from 'hono';
-import * as stytch from 'stytch';
 import type { Bindings } from '../../../bindings';
 
 const coreHandlers = new Hono<{ Bindings: Bindings }>().get(
