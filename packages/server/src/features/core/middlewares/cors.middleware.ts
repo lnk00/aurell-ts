@@ -7,7 +7,7 @@ export const corsMiddleware = (
 	next: Next,
 ) => {
 	const corsMiddlewareHandler = cors({
-		origin: c.env.CLIENT_URL,
+		origin: [c.env.CLIENT_URL, 'http://localhost:5173', 'https://aurell.app'],
 		allowHeaders: ['Content-Type', 'Authorization'],
 		allowMethods: ['POST', 'GET', 'OPTIONS'],
 		exposeHeaders: ['Content-Length'],

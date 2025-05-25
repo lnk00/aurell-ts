@@ -4,9 +4,8 @@ const stytchOptions = {
 	cookieOptions: {
 		opaqueTokenCookieName: 'stytch_session',
 		jwtCookieName: 'stytch_session_jwt',
-		path: '',
-		availableToSubdomains: false,
-		domain: '',
+		availableToSubdomains: true,
+		domain: 'aurell.app',
 	},
 };
 
