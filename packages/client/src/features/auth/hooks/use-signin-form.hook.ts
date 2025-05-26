@@ -7,6 +7,7 @@ import { useState } from 'react';
 export function useSigninForm() {
 	const navigate = useNavigate();
 	const magicLinkService = getService('magiclink');
+	const oauthService = getService('oauth');
 	const [isLoading, setIsLoading] = useState(false);
 
 	const form = useForm({
@@ -32,14 +33,12 @@ export function useSigninForm() {
 		},
 	});
 
-	// TODO: Implement Google signin
-	const handleGoogleSignin = () => {
-		throw 'Google signin not implemented';
+	const handleGoogleSignin = async () => {
+		await oauthService.signinWithGoogle();
 	};
 
-	// TODO: Implement Apple signin
-	const handleAppleSignin = () => {
-		throw 'Apple signin not implemented';
+	const handleAppleSignin = async () => {
+		await oauthService.signinWithApple();
 	};
 
 	return { form, handleGoogleSignin, handleAppleSignin, isLoading };

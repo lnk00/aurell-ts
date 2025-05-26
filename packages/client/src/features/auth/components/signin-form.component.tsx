@@ -3,7 +3,8 @@ import googleLogo from '@/assets/images/google.svg';
 import { useSigninForm } from '../hooks/use-signin-form.hook';
 
 export function SigninForm() {
-	const { form, isLoading } = useSigninForm();
+	const { form, handleAppleSignin, handleGoogleSignin, isLoading } =
+		useSigninForm();
 
 	return (
 		<form
@@ -54,6 +55,7 @@ export function SigninForm() {
 					</div>
 					<button
 						className="btn btn-block bg-white text-black border-[#e5e5e5]"
+						onClick={handleGoogleSignin}
 						type="button"
 					>
 						<img src={googleLogo} alt="apple logo" />
@@ -61,6 +63,7 @@ export function SigninForm() {
 					</button>
 					<button
 						className="btn btn-block bg-black text-white border-black"
+						onClick={handleAppleSignin}
 						type="button"
 					>
 						<img src={appleLogo} alt="apple logo" />
