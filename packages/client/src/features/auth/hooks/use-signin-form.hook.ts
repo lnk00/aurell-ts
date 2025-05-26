@@ -2,19 +2,22 @@ import { getService } from '@/libs/ioc.lib';
 import { useNavigate } from '@tanstack/react-router';
 import { useForm } from '@tanstack/react-form';
 import z from 'zod/v4';
+import { useState } from 'react';
 
 export function useSigninForm() {
 	const navigate = useNavigate();
 	const magicLinkService = getService('magiclink');
+	const [isLoading, setIsLoading] = useState(false);
 
 	const form = useForm({
 		defaultValues: { email: '' },
 		onSubmit: async ({ value }) => {
+			setIsLoading(true);
 			await magicLinkService.send(value.email);
-			// After successful magic link send, redirect to confirmation page with email
-			navigate({ 
+			setIsLoading(false);
+			navigate({
 				to: '/auth/magiclink/confirmation',
-				search: { email: value.email }
+				search: { email: value.email },
 			});
 		},
 		validators: {
@@ -39,5 +42,5 @@ export function useSigninForm() {
 		throw 'Apple signin not implemented';
 	};
 
-	return { form, handleGoogleSignin, handleAppleSignin };
+	return { form, handleGoogleSignin, handleAppleSignin, isLoading };
 }

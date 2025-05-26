@@ -3,7 +3,7 @@ import googleLogo from '@/assets/images/google.svg';
 import { useSigninForm } from '../hooks/use-signin-form.hook';
 
 export function SigninForm() {
-	const { form } = useSigninForm();
+	const { form, isLoading } = useSigninForm();
 
 	return (
 		<form
@@ -42,7 +42,11 @@ export function SigninForm() {
 				/>
 				<div className="card-actions">
 					<button className="btn btn-soft btn-block" type="submit">
+						{isLoading && <span className="loading-spinner loading-xs" />}
 						Continue with email
+						{isLoading && (
+							<span className="loading loading-spinner loading-xs" />
+						)}
 					</button>
 
 					<div className="flex w-full flex-col">
