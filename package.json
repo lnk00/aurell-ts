@@ -6,7 +6,8 @@
 		"client:dev": "cd packages/client && bun run dev",
 		"server:dev": "cd packages/server && bun run dev",
 		"client:deploy": "cd packages/client && bun run deploy",
-		"server:deploy": "cd packages/server && bun run deploy"
+		"server:deploy": "cd packages/server && bun run deploy",
+		"server:migration": "cd packages/server && bun run migration"
 	},
 	"devDependencies": {
 		"@types/bun": "latest"

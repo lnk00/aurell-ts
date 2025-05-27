@@ -6,9 +6,12 @@
 		"test": "vitest",
 		"build": "vite build && vite build --ssr",
 		"deploy": "bun run build && wrangler deploy dist-server/index.js && rm -rf dist dist-server",
-		"cf-typegen": "wrangler types --env-interface CloudflareBindings"
+		"cf-typegen": "wrangler types --env-interface CloudflareBindings",
+		"migration": "drizzle-kit push"
 	},
 	"dependencies": {
+		"dotenv": "^16.5.0",
+		"drizzle-orm": "^0.43.1",
 		"hono": "^4.7.10",
 		"stytch": "^12.19.0",
 		"zod": "^3.25.3"
@@ -18,6 +21,7 @@
 		"@cloudflare/vite-plugin": "^0.1.15",
 		"@cloudflare/vitest-pool-workers": "^0.8.30",
 		"@hono/vite-build": "^1.5.0",
+		"drizzle-kit": "^0.31.1",
 		"vite": "^6.1.1",
 		"vite-plugin-ssr-hot-reload": "^0.4.1",
 		"vitest": "~3.1.0",

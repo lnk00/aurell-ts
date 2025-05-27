@@ -10,7 +10,8 @@
     {
       "binding": "DB",
       "database_name": "aurell-prod",
-      "database_id": "0af50b36-f812-41bf-b561-9f023811cf2e"
+      "database_id": "0af50b36-f812-41bf-b561-9f023811cf2e",
+      "migrations_dir": "drizzle/migrations"
     }
   ]
 }
