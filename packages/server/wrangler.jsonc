@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "fiqo-server",
+  "name": "aurell-server",
   "compatibility_date": "2025-03-21",
   "main": "./src/index.ts",
   "assets": {
@@ -9,8 +9,8 @@
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "prod-fiqo",
-      "database_id": "6f565d35-dd99-43e3-aec1-1c549e7633e5"
+      "database_name": "aurell-prod",
+      "database_id": "0af50b36-f812-41bf-b561-9f023811cf2e"
     }
   ]
 }

@@ -1,4 +1,4 @@
-# fiqo
+# Aurell
 
 To install dependencies:
 

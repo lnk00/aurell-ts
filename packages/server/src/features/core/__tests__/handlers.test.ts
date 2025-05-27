@@ -19,7 +19,7 @@ describe('CORE', () => {
 			it('Should return a valid json response', async () => {
 				const res = await app.request('http://localhost/api/core/infos');
 				expect(await res.json()).toEqual({
-					name: 'fiqo-api',
+					name: 'aurell-api',
 					version: '0.0.1',
 				});
 			});

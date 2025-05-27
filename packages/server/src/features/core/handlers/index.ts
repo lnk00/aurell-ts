@@ -6,7 +6,7 @@ const coreHandlers = new Hono<{ Bindings: Bindings }>().get(
 	async (c) => {
 		return c.json(
 			{
-				name: 'fiqo-api',
+				name: 'aurell-api',
 				version: '0.0.1',
 			},
 			200,
