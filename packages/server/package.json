@@ -5,8 +5,7 @@
 		"dev": "vite --port 3000",
 		"test": "vitest",
 		"build": "vite build && vite build --ssr",
-		"preview": "bun run build && wrangler dev dist-server/index.js",
-		"deploy": "bun run build && wrangler deploy dist-server/index.js",
+		"deploy": "bun run build && wrangler deploy dist-server/index.js && rm -rf dist dist-server",
 		"cf-typegen": "wrangler types --env-interface CloudflareBindings"
 	},
 	"dependencies": {

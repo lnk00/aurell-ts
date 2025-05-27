@@ -11,7 +11,7 @@
 		"format": "biome format",
 		"lint": "biome lint",
 		"check": "biome check",
-		"deploy": "bun run build && wrangler deploy"
+		"deploy": "bun run build && wrangler deploy && rm -rf dist"
 	},
 	"dependencies": {
 		"@cloudflare/workers-types": "^4.20250521.0",

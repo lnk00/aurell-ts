@@ -2,12 +2,17 @@
 	"name": "aurell",
 	"version": "0.0.1",
 	"author": "Damien Dumontet",
+	"scripts": {
+		"client:dev": "cd packages/client && bun run dev",
+		"server:dev": "cd packages/server && bun run dev",
+		"client:deploy": "cd packages/client && bun run deploy",
+		"server:deploy": "cd packages/server && bun run deploy"
+	},
 	"devDependencies": {
 		"@types/bun": "latest"
 	},
 	"peerDependencies": {
 		"typescript": "^5"
 	},
-	"scripts": {},
 	"workspaces": ["packages/*"]
 }
