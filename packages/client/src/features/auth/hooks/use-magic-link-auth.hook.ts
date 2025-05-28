@@ -1,3 +1,4 @@
+import { useCreateProfile } from '@/features/profile/api/use-create-profile.api';
 import { getService } from '@/libs/ioc.lib';
 import { useNavigate } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
@@ -7,6 +8,7 @@ export function useMagicLinkAuth() {
 	const [error, setError] = useState<string | null>(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const magicLinkService = getService('magiclink');
+	const { refetch: createProfile } = useCreateProfile();
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
@@ -20,6 +22,7 @@ export function useMagicLinkAuth() {
 				}
 
 				const userId = await magicLinkService.authenticate(token);
+				await createProfile();
 
 				if (userId) {
 					setError(null);
