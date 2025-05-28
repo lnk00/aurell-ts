@@ -8,11 +8,15 @@ const profileHandlers = new Hono<{ Bindings: Bindings }>().post(
 	async (c) => {
 		const { userId } = await c.req.parseBody();
 
-		const db = drizzle(c.env.DB);
-		await db
-			.insert(users)
-			.values({ id: userId as string })
-			.onConflictDoNothing();
+		try {
+			const db = drizzle(c.env.DB);
+			await db
+				.insert(users)
+				.values({ id: userId as string })
+				.onConflictDoNothing();
+		} catch (e) {
+			console.log(e);
+		}
 
 		return c.json(
 			{
