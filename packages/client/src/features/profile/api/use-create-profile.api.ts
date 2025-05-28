@@ -5,8 +5,8 @@ import { useQuery } from '@tanstack/react-query';
 const QUERY_KEY = 'CREATE_PROFILE';
 
 async function queryFn(userId: string) {
-	const res = await rpcClient.api.profile.create.$get({
-		query: { userId },
+	const res = await rpcClient.api.profile.create.$post({
+		form: { userId },
 	});
 	return await res.json();
 }
