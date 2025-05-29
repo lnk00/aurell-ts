@@ -4,19 +4,19 @@ import { Hono } from 'hono';
 
 describe('CORE', () => {
 	describe('HANDLERS', () => {
-		describe('/api/core/infos', () => {
-			let app: Hono;
+		let app: Hono;
 
-			beforeAll(() => {
-				app = new Hono().route('/api/core', coreHandlers);
-			});
+		beforeAll(() => {
+			app = new Hono().route('/api/core', coreHandlers);
+		});
 
-			it('Should return 200 response', async () => {
+		describe('when /api/core/infos is called', () => {
+			it('it should return with a status 200', async () => {
 				const res = await app.request('http://localhost/api/core/infos');
 				expect(res.status).toBe(200);
 			});
 
-			it('Should return a valid json response', async () => {
+			it('it should return a valid json response', async () => {
 				const res = await app.request('http://localhost/api/core/infos');
 				expect(await res.json()).toEqual({
 					name: 'aurell-api',

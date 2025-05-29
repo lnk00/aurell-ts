@@ -1,30 +1,18 @@
 import { describe, it, expect, beforeAll, vi } from 'vitest';
 import coreHandlers from '../handlers';
 import { Hono } from 'hono';
+import { MOCK_ENV } from '../../../../test.config';
 
-describe('CORE', () => {
+describe('PROFILE', () => {
 	describe('HANDLERS', () => {
-		describe('/api/profile/create', () => {
-			let app: Hono;
-			const MOCK_ENV = {
-				DB: {
-					prepare: () => {
-						return {
-							bind: () => {
-								return {
-									run: () => {},
-								};
-							},
-						};
-					},
-				},
-			};
+		let app: Hono;
 
-			beforeAll(() => {
-				app = new Hono().route('/api/profile', coreHandlers);
-			});
+		beforeAll(() => {
+			app = new Hono().route('/api/profile', coreHandlers);
+		});
 
-			it('Should return 200 response', async () => {
+		describe('when /api/profile/create is called', () => {
+			it('it should return with a status 200', async () => {
 				const formData = new FormData();
 				formData.append('userId', 'test-user-id');
 
