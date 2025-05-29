@@ -3,6 +3,7 @@ import { Hono } from 'hono';
 import { guardMiddleware } from '../../middlewares/guard.middleware';
 import type { Bindings } from '../../../../bindings';
 import { MOCK_ENV } from '../../../../../test.config';
+import { serviceMiddleware } from '../../../core/middlewares/service.middleware';
 
 vi.mock('stytch', () => ({
 	Client: vi.fn(),
@@ -19,6 +20,7 @@ describe('AUTH', () => {
 
 			beforeEach(() => {
 				app = new Hono<{ Bindings: Bindings }>();
+				app.use('*', serviceMiddleware);
 				app.use('*', guardMiddleware);
 				app.get('/protected', (c) => c.json({ success: true }));
 				vi.clearAllMocks();
