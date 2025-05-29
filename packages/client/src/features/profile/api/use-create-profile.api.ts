@@ -14,7 +14,7 @@ async function queryFn(userId: string) {
 export function useCreateProfile(userId: string) {
 	return useQuery({
 		queryKey: [QUERY_KEY, userId],
-		queryFn: () => queryFn(userId),
+		queryFn: async () => await queryFn(userId),
 	});
 }
 

@@ -14,6 +14,14 @@ app.onError((err, c) => {
 	let status: ContentfulStatusCode = 500;
 	if (err instanceof HTTPException) status = err.status;
 
+	console.error({
+		timestamp: new Date().toISOString(),
+		error: err.message,
+		stack: err.stack,
+		path: c.req.path,
+		method: c.req.method,
+	});
+
 	return c.json(
 		{
 			success: false,
