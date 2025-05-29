@@ -1,11 +1,10 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { Hono } from 'hono';
-import { guardMiddleware } from '../../middlewares/guard.middleware';
-import type { Bindings } from '../../../../bindings';
-import { MOCK_ENV } from '../../../../../test.config';
-import { serviceMiddleware } from '../../../core/middlewares/service.middleware';
-import { getService } from '../../../../libs/ioc.lib';
 import { getCookie } from 'hono/cookie';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { getServiceMockWith, MOCK_ENV } from '../../../../../test.config';
+import type { Bindings } from '../../../../bindings';
+import { getService } from '../../../../libs/ioc.lib';
+import { guardMiddleware } from '../../middlewares/guard.middleware';
 
 vi.mock('hono/cookie', () => ({
 	getCookie: vi.fn(),
@@ -23,7 +22,6 @@ describe('AUTH', () => {
 
 			beforeEach(() => {
 				app = new Hono<{ Bindings: Bindings }>();
-				app.use('*', serviceMiddleware);
 				app.use('*', guardMiddleware);
 				app.get('/protected', (c) => c.json({ success: true }));
 				vi.clearAllMocks();
@@ -50,7 +48,9 @@ describe('AUTH', () => {
 					};
 
 					vi.mocked(getCookie).mockReturnValue('invalid-jwt-token');
-					vi.mocked(getService).mockReturnValue(mockSessionService);
+					vi.mocked(getService).mockImplementation(
+						getServiceMockWith({ session: mockSessionService }),
+					);
 
 					const res = await app.request(
 						'http://localhost/protected',
@@ -72,7 +72,9 @@ describe('AUTH', () => {
 					};
 
 					vi.mocked(getCookie).mockReturnValue('valid-jwt-token');
-					vi.mocked(getService).mockReturnValue(mockSessionService);
+					vi.mocked(getService).mockImplementation(
+						getServiceMockWith({ session: mockSessionService }),
+					);
 
 					const res = await app.request(
 						'http://localhost/protected',

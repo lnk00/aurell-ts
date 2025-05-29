@@ -6,7 +6,7 @@ import { SessionStytchService } from '../features/auth/services/session/implemen
 export const services: Container = new Container();
 let isServicesInitialized = false;
 
-type ServiceTypeMap = {
+export type ServiceTypeMap = {
 	session: SessionService;
 };
 
