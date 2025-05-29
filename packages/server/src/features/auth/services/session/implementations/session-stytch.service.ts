@@ -6,17 +6,18 @@ import * as stytch from 'stytch';
 @injectable()
 export class SessionStytchService implements SessionService {
 	env: Bindings;
+	client: stytch.Client;
 
 	constructor(bindings: Bindings) {
 		this.env = bindings;
-	}
-
-	async verifyJwt(token: string) {
-		const stytchClient = new stytch.Client({
+		this.client = new stytch.Client({
 			project_id: this.env.STYTCH_PROJECT_ID,
 			secret: this.env.STYTCH_SECRET,
 		});
-		await stytchClient.sessions.authenticateJwt({
+	}
+
+	async verifyJwt(token: string) {
+		await this.client.sessions.authenticateJwt({
 			session_jwt: token,
 		});
 	}

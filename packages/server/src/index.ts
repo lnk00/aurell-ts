@@ -6,10 +6,14 @@ import { guardMiddleware } from './features/auth/middlewares/guard.middleware';
 import profileHandlers from './features/profile/handlers';
 import { HTTPException } from 'hono/http-exception';
 import type { ContentfulStatusCode } from 'hono/utils/http-status';
+import { serviceMiddleware } from './features/core/middlewares/service.middleware';
 
 const app = new Hono<{ Bindings: Bindings }>();
+
+app.use('*', serviceMiddleware);
 app.use('*', corsMiddleware);
 app.use('*', guardMiddleware);
+
 app.onError((err, c) => {
 	let status: ContentfulStatusCode = 500;
 	if (err instanceof HTTPException) status = err.status;
