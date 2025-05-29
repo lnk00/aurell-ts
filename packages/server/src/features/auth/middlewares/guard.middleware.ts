@@ -1,8 +1,8 @@
 import type { Context, Next } from 'hono';
 import * as stytch from 'stytch';
 import type { Bindings } from '../../../bindings';
-import { HTTPException } from 'hono/http-exception';
 import { getCookie } from 'hono/cookie';
+import { NotAuthenticatedError } from '../../core/types/errors.type';
 
 export const guardMiddleware = async (
 	c: Context<{ Bindings: Bindings }>,
@@ -11,7 +11,7 @@ export const guardMiddleware = async (
 	const jwt = getCookie(c, 'stytch_session_jwt');
 
 	if (!jwt) {
-		throw new HTTPException(401, { message: 'User not authenticated' });
+		throw new NotAuthenticatedError('No jwt found in cookies');
 	}
 
 	const stytchClient = new stytch.Client({
@@ -25,6 +25,6 @@ export const guardMiddleware = async (
 		});
 		return next();
 	} catch {
-		throw new HTTPException(401, { message: 'User not authenticated' });
+		throw new NotAuthenticatedError('Could not validate the jwt token');
 	}
 };
