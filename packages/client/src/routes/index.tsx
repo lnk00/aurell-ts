@@ -49,7 +49,7 @@ function RouteComponent() {
 							</li>
 						</ul>
 					</nav>
-					<div className="p-4 mt-auto">
+					<div className="p-6 mt-auto">
 						<button
 							className="btn btn-accent w-full"
 							type="button"
