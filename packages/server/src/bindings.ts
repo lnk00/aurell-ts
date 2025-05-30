@@ -3,4 +3,6 @@ export type Bindings = {
 	STYTCH_PROJECT_ID: string;
 	STYTCH_SECRET: string;
 	CLIENT_URL: string;
+	TINK_CLIENT_ID: string;
+	TINK_CLIENT_SECRET: string;
 };
