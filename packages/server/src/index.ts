@@ -1,15 +1,15 @@
 import { Hono } from 'hono';
 import { corsMiddleware } from './features/core/middlewares/cors.middleware';
 import coreHandlers from './features/core/handlers';
-import type { Bindings } from './bindings';
 import { guardMiddleware } from './features/auth/middlewares/guard.middleware';
 import profileHandlers from './features/profile/handlers';
 import { HTTPException } from 'hono/http-exception';
 import type { ContentfulStatusCode } from 'hono/utils/http-status';
 import { serviceMiddleware } from './features/core/middlewares/service.middleware';
 import openbankingHandlers from './features/openbanking/handlers';
+import type { HonoContextType } from './types/context.type';
 
-const app = new Hono<{ Bindings: Bindings }>();
+const app = new Hono<HonoContextType>();
 
 app.use('*', serviceMiddleware);
 app.use('*', corsMiddleware);

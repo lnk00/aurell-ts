@@ -2,9 +2,9 @@ import { Hono } from 'hono';
 import { getCookie } from 'hono/cookie';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { getServiceMockWith, MOCK_ENV } from '../../../../../test.config';
-import type { Bindings } from '../../../../bindings';
 import { getService } from '../../../../libs/ioc.lib';
 import { guardMiddleware } from '../../middlewares/guard.middleware';
+import type { HonoContextType } from '../../../../types/context.type';
 
 vi.mock('hono/cookie', () => ({
 	getCookie: vi.fn(),
@@ -18,10 +18,10 @@ vi.mock('../../../../libs/ioc.lib', () => ({
 describe('AUTH', () => {
 	describe('MIDDLEWARES', () => {
 		describe('GUARD MIDDLEWARE', () => {
-			let app: Hono<{ Bindings: Bindings }>;
+			let app: Hono<HonoContextType>;
 
 			beforeEach(() => {
-				app = new Hono<{ Bindings: Bindings }>();
+				app = new Hono<HonoContextType>();
 				app.use('*', guardMiddleware);
 				app.get('/protected', (c) => c.json({ success: true }));
 				vi.clearAllMocks();

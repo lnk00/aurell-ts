@@ -1,13 +1,14 @@
 import { Hono } from 'hono';
-import type { Bindings } from '../../../bindings';
 import { getService } from '../../../libs/ioc.lib';
+import type { HonoContextType } from '../../../types/context.type';
 
-const openbankingHandlers = new Hono<{ Bindings: Bindings }>().get(
+const openbankingHandlers = new Hono<HonoContextType>().get(
 	'/auth/delegate',
 	async (c) => {
+		const userId = c.get('userId');
 		const obCoreService = getService('obcore');
 
-		const token = await obCoreService.createDelegatedAuth('', '');
+		const token = await obCoreService.createDelegatedAuth(userId as string, '');
 
 		return c.json(
 			{

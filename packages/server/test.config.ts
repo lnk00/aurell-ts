@@ -1,6 +1,6 @@
 import { vi } from 'vitest';
-import type { Bindings } from './src/bindings';
 import type { ServiceTypeMap } from './src/libs/ioc.lib';
+import type { Bindings } from './src/types/context.type';
 
 export const MOCK_ENV: Bindings = {
 	DB: {
@@ -35,7 +35,7 @@ export function getServiceMockWith(services: Partial<ServiceTypeMap>) {
 
 export const defaultServiceMock: ServiceTypeMap = {
 	session: {
-		verifyJwt: (_: string) => Promise.resolve(),
+		verifyJwt: (_: string) => Promise.resolve({ userId: '', sessionId: '' }),
 	},
 	obcore: {
 		createDelegatedAuth: (_: string, __: string) => Promise.resolve(''),

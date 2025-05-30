@@ -1,17 +1,17 @@
 import { Hono } from 'hono';
-import type { Bindings } from '../../../bindings';
 import { drizzle } from 'drizzle-orm/d1';
 import { users } from '../../../libs/db/schemas/user.schema';
 import { z } from 'zod/v4';
 import { validator } from 'hono/validator';
 import { Validate } from '../../../libs/validator.lib';
 import { DatabaseError } from '../../core/types/errors.type';
+import type { HonoContextType } from '../../../types/context.type';
 
 const schema = z.object({
 	userId: z.string('userId is required in the request body'),
 });
 
-const profileHandlers = new Hono<{ Bindings: Bindings }>().post(
+const profileHandlers = new Hono<HonoContextType>().post(
 	'/create',
 	validator('form', (value) => Validate(value, schema)),
 	async (c) => {

@@ -1,6 +1,6 @@
 import { injectable } from 'inversify';
 import type { ObCoreService } from '../ob-core.service';
-import type { Bindings } from '../../../../../bindings';
+import type { Bindings } from '../../../../../types/context.type';
 
 type AccessTokenScopes = 'user:create' | 'authorization:grant';
 

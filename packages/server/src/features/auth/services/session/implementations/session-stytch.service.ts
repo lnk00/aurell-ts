@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
-import type { Bindings } from '../../../../../bindings';
 import type { SessionService } from '../session.service';
 import * as stytch from 'stytch';
+import type { Bindings } from '../../../../../types/context.type';
 
 @injectable()
 export class SessionStytchService implements SessionService {
@@ -17,8 +17,13 @@ export class SessionStytchService implements SessionService {
 	}
 
 	async verifyJwt(token: string) {
-		await this.client.sessions.authenticateJwt({
+		const { session } = await this.client.sessions.authenticateJwt({
 			session_jwt: token,
 		});
+
+		return {
+			userId: session.user_id,
+			sessionId: session.session_id,
+		};
 	}
 }
