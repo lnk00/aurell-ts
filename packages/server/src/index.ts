@@ -7,6 +7,7 @@ import profileHandlers from './features/profile/handlers';
 import { HTTPException } from 'hono/http-exception';
 import type { ContentfulStatusCode } from 'hono/utils/http-status';
 import { serviceMiddleware } from './features/core/middlewares/service.middleware';
+import openbankingHandlers from './features/openbanking/handlers';
 
 const app = new Hono<{ Bindings: Bindings }>();
 
@@ -41,7 +42,8 @@ app.onError((err, c) => {
 
 const routes = app
 	.route('/api/core', coreHandlers)
-	.route('/api/profile', profileHandlers);
+	.route('/api/profile', profileHandlers)
+	.route('/api/ob', openbankingHandlers);
 
 export type AppType = typeof routes;
 export default app;
