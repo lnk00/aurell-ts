@@ -2,79 +2,61 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Development Commands
+## Commands
 
-### Client (React + Vite)
-```bash
-# Navigate to client directory
-cd packages/client
+### Development
+- `bun run client:dev` - Start client development server on port 5173
+- `bun run server:dev` - Start server development server on port 3000
 
-# Development server
-bun run dev  # Runs on port 5173
+### Testing
+- `cd packages/client && bun run test` - Run client tests with Vitest
+- `cd packages/server && bun run test` - Run server tests with Vitest and Cloudflare Workers pool
 
-# Building
-bun run build  # Runs vite build + typescript compilation
+### Linting & Formatting
+- `cd packages/client && bun run check` - Run Biome check (lint + format)
+- `cd packages/client && bun run lint` - Run Biome linter
+- `cd packages/client && bun run format` - Run Biome formatter
+- Server uses root-level biome.json configuration
 
-# Testing
-bun run test  # Runs vitest
+### Database Migrations
+- `bun run server:migration:generate` - Generate new migration with Drizzle
+- `bun run server:migration:apply` - Apply migrations to production D1 database
+- `bun run server:migration:apply:local` - Apply migrations to local D1 database
 
-# Code quality
-bun run lint    # Biome linting
-bun run format  # Biome formatting
-bun run check   # Biome check (lint + format)
-```
+### Deployment
+- `bun run client:deploy` - Build and deploy client to Cloudflare Pages
+- `bun run server:deploy` - Build and deploy server to Cloudflare Workers
 
-### Server (Hono + Cloudflare Workers)
-```bash
-# Navigate to server directory
-cd packages/server
-
-# Development server
-bun run dev  # Runs on port 3000
-
-# Building
-bun run build  # Builds for Cloudflare Workers
-
-# Testing
-bun run test  # Runs vitest with Cloudflare Workers pool
-
-# Cloudflare deployment
-bun run preview  # Local preview with wrangler
-bun run deploy   # Deploy to Cloudflare Workers
-bun run cf-typegen  # Generate Cloudflare types
-```
-
-### Root Commands
-```bash
-# Install all dependencies
-bun install
-```
-
-## Architecture Overview
+## Architecture
 
 ### Monorepo Structure
-- **packages/client**: React frontend with Vite, TanStack Router/Query, Stytch authentication
-- **packages/server**: Hono API server deployed on Cloudflare Workers with D1 database
+- Bun workspace with `packages/client` and `packages/server`
+- Both packages deploy to Cloudflare (Pages/Workers)
+- Shared TypeScript configuration and Biome linting rules
 
-### Authentication Flow
-- **Client**: Uses Stytch SDK for magic link authentication with cookie-based sessions
-- **Server**: JWT validation middleware (`guard.middleware.ts`) validates Stytch session tokens from cookies
-- **Services**: Dependency injection pattern with Inversify container for auth services
+### Client (React SPA)
+- **Tech Stack**: React 19, TanStack Router, TanStack Query, Vite, Tailwind CSS, DaisyUI
+- **Authentication**: Stytch integration with OAuth and magic link support
+- **Architecture**: Feature-based organization with dependency injection (Inversify)
+- **Key Features**: `/auth`, `/profile` routes with session management
 
-### Key Technologies
-- **Frontend**: React 19, TanStack Router/Query, Tailwind CSS, DaisyUI
-- **Backend**: Hono framework, Cloudflare Workers, D1 database, Stytch authentication
-- **Tooling**: Biome for linting/formatting, Vitest for testing, Bun package manager
+### Server (Hono API)
+- **Tech Stack**: Hono framework, Cloudflare Workers, Drizzle ORM, D1 database
+- **Authentication**: Session-based with Stytch integration and guard middleware
+- **Architecture**: Feature-based handlers with middleware pipeline
+- **API Routes**: 
+  - `/api/core` - Core functionality and health checks
+  - `/api/profile` - User profile management
+  - `/api/ob` - Open banking integration (Tink)
 
-### Service Architecture
-Client uses dependency injection pattern with Inversify:
-- Services are bound in `libs/ioc.lib.ts`
-- Abstract interfaces in `services/` directories
-- Stytch implementations in `implementations/` subdirectories
+### Key Architectural Patterns
+- **IoC Container**: Uses Inversify for dependency injection in both client and server
+- **Service Layer**: Abstract service interfaces with implementation swapping (e.g., Stytch services)
+- **Type Safety**: Full TypeScript with Zod validation and Hono RPC client
+- **Testing**: Mock services for unit testing, Cloudflare Workers testing environment
+- **Middleware Pipeline**: CORS, service injection, and authentication guard on all routes
 
-### Environment Configuration
-Server requires these Cloudflare environment variables:
-- `STYTCH_PROJECT_ID`: Stytch project identifier
-- `STYTCH_SECRET`: Stytch secret key
-- `CLIENT_URL`: Frontend application URL
-- `DB`: D1 database binding (configured in wrangler.jsonc)
+### Context & State Management
+- Server: Hono context extended with `userId` and `sessionId` from guard middleware
+- Client: TanStack Router context with query client integration
+- Shared types between client/server via Hono RPC pattern
