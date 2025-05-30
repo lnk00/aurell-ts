@@ -7,6 +7,13 @@ export class TypeValidationError extends HTTPException {
 	}
 }
 
+export class DatabaseError extends HTTPException {
+	constructor(message: string) {
+		super(500, { message });
+		this.name = 'DatabaseError';
+	}
+}
+
 export class NotAuthenticatedError extends HTTPException {
 	constructor(message: string) {
 		super(401, { message });

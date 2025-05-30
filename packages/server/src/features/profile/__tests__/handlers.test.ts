@@ -31,5 +31,25 @@ describe('PROFILE', () => {
 				expect(prepareSpy).toHaveBeenCalled();
 			});
 		});
+
+		describe('when /api/profile/create is called without userId in form data', () => {
+			it('it should return with a status 400', async () => {
+				const formData = new FormData();
+
+				const prepareSpy = vi.spyOn(MOCK_ENV.DB, 'prepare');
+
+				const res = await app.request(
+					'http://localhost/api/profile/create',
+					{
+						method: 'POST',
+						body: formData,
+					},
+					MOCK_ENV,
+				);
+
+				expect(res.status).toBe(400);
+				expect(prepareSpy).not.toHaveBeenCalled();
+			});
+		});
 	});
 });
