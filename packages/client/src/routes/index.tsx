@@ -21,16 +21,31 @@ function RouteComponent() {
 	const { signout } = useSignout();
 
 	return (
-		<div className="drawer lg:drawer-open">
+		<div className="drawer lg:drawer-open bg-base-100">
 			<input id="drawer-toggle" type="checkbox" className="drawer-toggle" />
 			<div className="drawer-content flex flex-col">
-				<main className="flex flex-col flex-1 p-6 bg-base-200">
+				<main className="flex flex-col flex-1 p-6">
 					<h1 className="text-2xl font-bold mb-6">Dashboard</h1>
-					<div className="bg-white rounded-2xl flex-1" />
+					<div className="bg-base-200 rounded-xl flex-1 p-6">
+						<div className="card card-border border-base-300 bg-base-100 w-96">
+							<div className="card-body">
+								<h2 className="card-title">Link your bank account</h2>
+								<p>
+									Link a bank account so you we can track and analyse your
+									buying habits.
+								</p>
+								<div className="card-actions">
+									<button className="btn btn-primary btn-block" type="button">
+										Start
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
 				</main>
 			</div>
 			<div className="drawer-side">
-				<aside className="w-64 min-h-full bg-base-200 flex flex-col">
+				<aside className="w-64 min-h-full flex flex-col">
 					<nav className="flex-1 p-4">
 						<ul className="menu menu-lg">
 							<li>
@@ -51,7 +66,7 @@ function RouteComponent() {
 					</nav>
 					<div className="p-6 mt-auto">
 						<button
-							className="btn btn-accent w-full"
+							className="btn w-full"
 							type="button"
 							onClick={() => signout()}
 						>
