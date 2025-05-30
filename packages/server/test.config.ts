@@ -17,7 +17,7 @@ export const MOCK_ENV: Bindings = {
 	TINK_CLIENT_SECRET: 'test-tink-client-secret',
 };
 
-export function getServiceMockWith(services: ServiceTypeMap) {
+export function getServiceMockWith(services: Partial<ServiceTypeMap>) {
 	const s = { ...defaultServiceMock, ...services };
 
 	return <K extends keyof ServiceTypeMap>(serviceKey: K) => {
