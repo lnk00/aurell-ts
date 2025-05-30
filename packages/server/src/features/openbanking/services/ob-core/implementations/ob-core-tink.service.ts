@@ -1,7 +1,6 @@
 import { injectable } from 'inversify';
 import type { ObCoreService } from '../ob-core.service';
 import type { Bindings } from '../../../../../types/context.type';
-import { OpenbankingError } from '../../../../core/types/errors.type';
 
 type AccessTokenScopes = 'user:create' | 'authorization:grant';
 
@@ -15,10 +14,20 @@ export class ObCoreTinkService implements ObCoreService {
 		this.env = bindings;
 	}
 
-	async createUser(userId: string) {
+	async getLinkCode(userId: string) {
+		await this.createUser(userId);
+		const { delegatedAuthCode } = await this.createDelegatedAuth(
+			userId,
+			'dams',
+		);
+
+		return { linkCode: delegatedAuthCode };
+	}
+
+	private async createUser(userId: string) {
 		const access_token = await this.createAccessToken(['user:create']);
 
-		const response = await fetch(`${this.BASE_URL}/user/create`, {
+		await fetch(`${this.BASE_URL}/user/create`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json; charset=utf-8',
@@ -30,20 +39,9 @@ export class ObCoreTinkService implements ObCoreService {
 				external_user_id: userId,
 			}),
 		});
-
-		if (response.status === 409) {
-			throw new OpenbankingError(
-				'Could not create the user in Tink, the user already exist',
-				409,
-			);
-		}
-
-		const { user_id } = (await response.json()) as { user_id: string };
-
-		return { obProviderUserId: user_id };
 	}
 
-	async createDelegatedAuth(userId: string, hint: string) {
+	private async createDelegatedAuth(userId: string, hint: string) {
 		const access_token = await this.createAccessToken(['authorization:grant']);
 
 		const params = new URLSearchParams();
