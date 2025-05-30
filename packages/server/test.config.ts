@@ -1,6 +1,8 @@
 import { vi } from 'vitest';
 import type { ServiceTypeMap } from './src/libs/ioc.lib';
 import type { Bindings } from './src/types/context.type';
+import { SessionMockService } from './src/features/auth/__tests__/mocks/session.service.mock';
+import { ObCoreMockService } from './src/features/openbanking/__tests__/mocks/ob-core.service.mock';
 
 export const MOCK_ENV: Bindings = {
 	DB: {
@@ -34,10 +36,6 @@ export function getServiceMockWith(services: Partial<ServiceTypeMap>) {
 }
 
 export const defaultServiceMock: ServiceTypeMap = {
-	session: {
-		verifyJwt: (_: string) => Promise.resolve({ userId: '', sessionId: '' }),
-	},
-	obcore: {
-		createDelegatedAuth: (_: string, __: string) => Promise.resolve(''),
-	},
+	session: new SessionMockService(),
+	obcore: new ObCoreMockService(),
 };

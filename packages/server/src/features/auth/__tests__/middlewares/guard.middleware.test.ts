@@ -1,10 +1,11 @@
-import { Context, Hono } from 'hono';
+import { type Context, Hono } from 'hono';
 import { getCookie } from 'hono/cookie';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { getServiceMockWith, MOCK_ENV } from '../../../../../test.config';
 import { getService } from '../../../../libs/ioc.lib';
 import { guardMiddleware } from '../../middlewares/guard.middleware';
 import type { HonoContextType } from '../../../../types/context.type';
+import { SessionMockServiceVerifyJwtThrow } from '../mocks/session.service.mock';
 
 vi.mock('hono/cookie', () => ({
 	getCookie: vi.fn(),
@@ -50,14 +51,14 @@ describe('AUTH', () => {
 
 			describe('when JWT cookie is present but invalid', () => {
 				it('it should throw NotAuthenticatedError', async () => {
-					const mockSessionService = {
-						verifyJwt: vi.fn().mockRejectedValue(new Error('Invalid JWT')),
-					};
-
 					vi.mocked(getCookie).mockReturnValue('invalid-jwt-token');
 					vi.mocked(getService).mockImplementation(
-						getServiceMockWith({ session: mockSessionService }),
+						getServiceMockWith({
+							session: new SessionMockServiceVerifyJwtThrow(),
+						}),
 					);
+
+					const spyVerifyJwt = vi.spyOn(getService('session'), 'verifyJwt');
 
 					const res = await app.request(
 						'http://localhost/protected',
@@ -66,25 +67,16 @@ describe('AUTH', () => {
 					);
 
 					expect(res.status).toBe(401);
-					expect(mockSessionService.verifyJwt).toHaveBeenCalledWith(
-						'invalid-jwt-token',
-					);
+					expect(spyVerifyJwt).toHaveBeenCalledWith('invalid-jwt-token');
 				});
 			});
 
 			describe('when JWT cookie is valid', () => {
 				it('it should proceed to next middleware/handler', async () => {
-					const mockSessionService = {
-						verifyJwt: vi.fn().mockReturnValue({
-							userId: 'test-user-id',
-							sessionId: 'test-session-id',
-						}),
-					};
-
 					vi.mocked(getCookie).mockReturnValue('valid-jwt-token');
-					vi.mocked(getService).mockImplementation(
-						getServiceMockWith({ session: mockSessionService }),
-					);
+					vi.mocked(getService).mockImplementation(getServiceMockWith({}));
+
+					const spyVerifyJwt = vi.spyOn(getService('session'), 'verifyJwt');
 
 					const res = await app.request(
 						'http://localhost/protected',
@@ -94,9 +86,7 @@ describe('AUTH', () => {
 
 					expect(res.status).toBe(200);
 					expect(await res.json()).toEqual({ success: true });
-					expect(mockSessionService.verifyJwt).toHaveBeenCalledWith(
-						'valid-jwt-token',
-					);
+					expect(spyVerifyJwt).toHaveBeenCalledWith('valid-jwt-token');
 					expect(testContext.get('userId')).toBe('test-user-id');
 					expect(testContext.get('sessionId')).toBe('test-session-id');
 				});
