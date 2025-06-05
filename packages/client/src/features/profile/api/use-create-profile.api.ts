@@ -21,6 +21,6 @@ export function useCreateProfile(userId: string) {
 export async function createProfile(userId: string) {
 	return queryClient.fetchQuery({
 		queryKey: [QUERY_KEY, userId],
-		queryFn: () => queryFn(userId),
+		queryFn: async () => await queryFn(userId),
 	});
 }

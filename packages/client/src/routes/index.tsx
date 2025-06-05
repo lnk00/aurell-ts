@@ -19,6 +19,7 @@ export const Route = createFileRoute('/')({
 
 function RouteComponent() {
 	const { signout } = useSignout();
+	const linkService = getService('link');
 
 	return (
 		<div className="drawer lg:drawer-open bg-base-100">
@@ -35,7 +36,11 @@ function RouteComponent() {
 									buying habits.
 								</p>
 								<div className="card-actions">
-									<button className="btn btn-primary btn-block" type="button">
+									<button
+										className="btn btn-primary btn-block"
+										type="button"
+										onClick={linkService.openLinker}
+									>
 										Start
 									</button>
 								</div>
