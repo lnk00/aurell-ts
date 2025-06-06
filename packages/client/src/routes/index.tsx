@@ -19,7 +19,7 @@ export const Route = createFileRoute('/')({
 
 function RouteComponent() {
 	const { signout } = useSignout();
-	const linkService = getService('link');
+	const aggregService = getService('aggreg');
 
 	return (
 		<div className="drawer lg:drawer-open bg-base-100">
@@ -39,7 +39,7 @@ function RouteComponent() {
 									<button
 										className="btn btn-primary btn-block"
 										type="button"
-										onClick={linkService.openLinker}
+										onClick={aggregService.openAggregator}
 									>
 										Start
 									</button>

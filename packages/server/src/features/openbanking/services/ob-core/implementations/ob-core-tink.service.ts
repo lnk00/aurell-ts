@@ -1,6 +1,7 @@
 import { injectable } from 'inversify';
 import type { ObCoreService } from '../ob-core.service';
 import type { Bindings } from '../../../../../types/context.type';
+import { OpenbankingError } from '../../../../core/types/errors.type';
 
 type AccessTokenScopes = 'user:create' | 'authorization:grant';
 
@@ -18,7 +19,7 @@ export class ObCoreTinkService implements ObCoreService {
 		await this.createUser(userId);
 		const { delegatedAuthCode } = await this.createDelegatedAuth(
 			userId,
-			'dams',
+			'dams', // TODO: change with real hint
 		);
 
 		return { linkCode: delegatedAuthCode };
@@ -65,6 +66,12 @@ export class ObCoreTinkService implements ObCoreService {
 			},
 		);
 
+		if (response.status !== 200) {
+			throw new OpenbankingError(
+				'Could not delegate the tink auth to connected user',
+			);
+		}
+
 		const { code } = (await response.json()) as { code: string };
 
 		return { delegatedAuthCode: code };
@@ -84,6 +91,10 @@ export class ObCoreTinkService implements ObCoreService {
 			},
 			body: params,
 		});
+
+		if (response.status !== 200) {
+			throw new OpenbankingError('Could not create a tink access token');
+		}
 
 		const { access_token } = (await response.json()) as {
 			access_token: string;
