@@ -1,0 +1,1 @@
+ALTER TABLE `bank-connections` DROP COLUMN `credentials`;

@@ -9,7 +9,8 @@
 		"server:deploy": "cd packages/server && bun run deploy",
 		"server:migration:generate": "cd packages/server && bun run migration:generate",
 		"server:migration:apply": "cd packages/server && bun run migration:apply",
-		"server:migration:apply:local": "cd packages/server && bun run migration:apply:local"
+		"server:migration:apply:local": "cd packages/server && bun run migration:apply:local",
+		"server:db:exec:local": "cd packages/server && bun run db:exec:local"
 	},
 	"devDependencies": {
 		"@types/bun": "latest"

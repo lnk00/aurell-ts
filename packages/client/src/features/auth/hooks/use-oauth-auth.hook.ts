@@ -1,3 +1,4 @@
+import { createProfile } from '@/features/profile/api/use-create-profile.api';
 import { getService } from '@/libs/ioc.lib';
 import { useNavigate } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
@@ -22,8 +23,11 @@ export function useOAuthAuth() {
 				const userId = await oauthService.authenticate(token);
 
 				if (userId) {
+					await createProfile(userId);
+
 					setError(null);
 					setIsLoading(false);
+
 					setTimeout(() => navigate({ to: '/' }), 3000);
 				} else {
 					throw new Error('Authentication failed.');

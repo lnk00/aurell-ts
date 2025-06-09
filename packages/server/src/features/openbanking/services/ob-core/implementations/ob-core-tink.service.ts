@@ -25,6 +25,10 @@ export class ObCoreTinkService implements ObCoreService {
 		return { linkCode: delegatedAuthCode };
 	}
 
+	async listAccounts(userId: string) {
+		console.log('LIST ACCOUNT');
+	}
+
 	private async createUser(userId: string) {
 		const access_token = await this.createAccessToken(['user:create']);
 
