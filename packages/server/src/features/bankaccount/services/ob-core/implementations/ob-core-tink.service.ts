@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
-import type { ObCoreService } from '../ob-core.service';
 import type { Bindings } from '../../../../../types/context.type';
 import { OpenbankingError } from '../../../../core/types/errors.type';
+import type { ObCoreService } from '../ob-core.service';
 
 type AccessTokenScopes = 'user:create' | 'authorization:grant';
 
@@ -25,7 +25,7 @@ export class ObCoreTinkService implements ObCoreService {
 		return { linkCode: delegatedAuthCode };
 	}
 
-	async listAccounts(userId: string) {
+	async listAccounts(_userId: string) {
 		console.log('LIST ACCOUNT');
 	}
 

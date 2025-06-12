@@ -1,8 +1,8 @@
 import { Container } from 'inversify';
-import type { SessionService } from '../features/auth/services/session/session.service';
 import { SessionStytchService } from '../features/auth/services/session/implementations/session-stytch.service';
-import type { ObCoreService } from '../features/openbanking/services/ob-core/ob-core.service';
-import { ObCoreTinkService } from '../features/openbanking/services/ob-core/implementations/ob-core-tink.service';
+import type { SessionService } from '../features/auth/services/session/session.service';
+import { ObCoreTinkService } from '../features/bankaccount/services/ob-core/implementations/ob-core-tink.service';
+import type { ObCoreService } from '../features/bankaccount/services/ob-core/ob-core.service';
 import type { Bindings } from '../types/context.type';
 
 export const services: Container = new Container();

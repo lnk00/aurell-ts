@@ -1,11 +1,11 @@
-import { Hono } from 'hono';
-import { getService } from '../../../libs/ioc.lib';
-import type { HonoContextType } from '../../../types/context.type';
-import z from 'zod/v4';
-import { validator } from 'hono/validator';
-import { Validate } from '../../../libs/validator.lib';
 import { drizzle } from 'drizzle-orm/d1';
+import { Hono } from 'hono';
+import { validator } from 'hono/validator';
+import z from 'zod/v4';
 import { bankConnections } from '../../../libs/db/schemas/bank-connection.schema';
+import { getService } from '../../../libs/ioc.lib';
+import { Validate } from '../../../libs/validator.lib';
+import type { HonoContextType } from '../../../types/context.type';
 import { DatabaseError } from '../../core/types/errors.type';
 
 const schema = z.object({
@@ -43,8 +43,7 @@ const openbankingHandlers = new Hono<HonoContextType>()
 					})
 					.onConflictDoNothing();
 			} catch (e) {
-				console.log(e);
-				throw new DatabaseError('Could not insert the bank connection');
+				throw new DatabaseError('Could not insert the bank connectio');
 			}
 
 			return c.json({
@@ -56,7 +55,7 @@ const openbankingHandlers = new Hono<HonoContextType>()
 		const userId = c.get('userId');
 		const obService = getService('obcore');
 
-		obService.listAccounts(userId as string);
+		await obService.listAccounts(userId as string);
 
 		return c.json({
 			success: true,
