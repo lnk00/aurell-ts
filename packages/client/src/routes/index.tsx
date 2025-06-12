@@ -1,7 +1,10 @@
 import { useSignout } from '@/features/auth/hooks/use-signout.hook';
-import { getBankAccounts } from '@/features/bankaccount/api/get-bank-accounts.api';
+import {
+	getBankAccounts,
+	useGetBankAccounts,
+} from '@/features/bankaccount/api/get-bank-accounts.api';
 import { getService } from '@/libs/ioc.lib';
-import { createFileRoute, Link, redirect } from '@tanstack/react-router';
+import { Link, createFileRoute, redirect } from '@tanstack/react-router';
 import { useEffect } from 'react';
 
 export const Route = createFileRoute('/')({
@@ -22,12 +25,7 @@ export const Route = createFileRoute('/')({
 function RouteComponent() {
 	const { signout } = useSignout();
 	const aggregService = getService('aggreg');
-
-	useEffect(() => {
-		getBankAccounts().then((r) => {
-			console.log(r);
-		});
-	}, []);
+	const { data } = useGetBankAccounts();
 
 	return (
 		<div className="drawer lg:drawer-open bg-base-100">
@@ -36,21 +34,34 @@ function RouteComponent() {
 				<main className="flex flex-col flex-1 p-6">
 					<h1 className="text-2xl font-bold mb-6">Dashboard</h1>
 					<div className="bg-base-200 rounded-xl flex-1 p-6">
-						<div className="card card-border border-base-300 bg-base-100 w-96">
-							<div className="card-body">
-								<h2 className="card-title">Link your bank account</h2>
-								<p>
-									Link a bank account so you we can track and analyse your
-									buying habits.
-								</p>
-								<div className="card-actions">
-									<button
-										className="btn btn-primary btn-block"
-										type="button"
-										onClick={aggregService.openAggregator}
-									>
-										Start
-									</button>
+						<div className="flex gap-4">
+							<div className="card card-border border-base-300 bg-base-100 w-96">
+								<div className="card-body">
+									<h2 className="card-title">Link your bank account</h2>
+									<p>
+										Link a bank account so you we can track and analyse your
+										buying habits.
+									</p>
+									<div className="card-actions">
+										<button
+											className="btn btn-primary btn-block"
+											type="button"
+											onClick={aggregService.openAggregator}
+										>
+											Start
+										</button>
+									</div>
+								</div>
+							</div>
+							<div className="card card-border border-base-300 bg-base-100 w-96">
+								<div className="card-body">
+									<h2 className="card-title">Bank accounts</h2>
+									{data?.accounts.map((account) => (
+										<div key={account.number}>
+											<p>{account.name}</p>
+											<p>{account.balance}</p>
+										</div>
+									))}
 								</div>
 							</div>
 						</div>
