@@ -53,12 +53,12 @@ const openbankingHandlers = new Hono<HonoContextType>()
 	)
 	.get('/accounts', async (c) => {
 		const userId = c.get('userId');
-		const obService = getService('obcore');
+		const obAccountService = getService('obaccount');
 
-		await obService.listAccounts(userId as string);
+		const accounts = await obAccountService.listAccounts(userId as string);
 
 		return c.json({
-			success: true,
+			accounts,
 		});
 	});
 

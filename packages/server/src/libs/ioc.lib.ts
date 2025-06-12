@@ -1,6 +1,8 @@
 import { Container } from 'inversify';
 import { SessionStytchService } from '../features/auth/services/session/implementations/session-stytch.service';
 import type { SessionService } from '../features/auth/services/session/session.service';
+import { ObAccountTinkService } from '../features/bankaccount/services/ob-account/implementations/ob-account-tink.service';
+import type { ObAccountService } from '../features/bankaccount/services/ob-account/ob-account.service';
 import { ObCoreTinkService } from '../features/bankaccount/services/ob-core/implementations/ob-core-tink.service';
 import type { ObCoreService } from '../features/bankaccount/services/ob-core/ob-core.service';
 import type { Bindings } from '../types/context.type';
@@ -11,6 +13,7 @@ let isServicesInitialized = false;
 export type ServiceTypeMap = {
 	session: SessionService;
 	obcore: ObCoreService;
+	obaccount: ObAccountService;
 };
 
 export function initializeServices(env: Bindings) {
@@ -22,6 +25,10 @@ export function initializeServices(env: Bindings) {
 
 	services.bind<ObCoreService>('obcore').toDynamicValue(() => {
 		return new ObCoreTinkService(env);
+	});
+
+	services.bind<ObAccountService>('obaccount').toDynamicValue(() => {
+		return new ObAccountTinkService(env);
 	});
 
 	isServicesInitialized = true;
