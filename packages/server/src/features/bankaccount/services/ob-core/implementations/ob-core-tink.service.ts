@@ -25,8 +25,17 @@ export class ObCoreTinkService implements ObCoreService {
 		return { linkCode: delegatedAuthCode };
 	}
 
-	async listAccounts(_userId: string) {
-		console.log('LIST ACCOUNT');
+	async listAccounts(userId: string) {
+		const d = await this.getUserAccessToken(userId);
+		const r = await fetch(`${this.BASE_URL}/accounts`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json; charset=utf-8',
+				Authorization: `Bearer ${d.token}`,
+			},
+		});
+
+		console.log(await r.json());
 	}
 
 	private async createUser(userId: string) {
@@ -105,5 +114,67 @@ export class ObCoreTinkService implements ObCoreService {
 		};
 
 		return access_token;
+	}
+
+	async getUserAccessToken(userId: string) {
+		const authorizationCode = await this.generateAuthorizationCode(userId);
+
+		const params = new URLSearchParams();
+		params.append('client_id', this.env.TINK_CLIENT_ID);
+		params.append('client_secret', this.env.TINK_CLIENT_SECRET);
+		params.append('grant_type', 'authorization_code');
+		params.append('code', authorizationCode);
+
+		const response = await fetch(`${this.BASE_URL}/oauth/token`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+			},
+			body: params,
+		});
+
+		if (response.status !== 200) {
+			throw new OpenbankingError(
+				'Could not get user access token from authorization code',
+			);
+		}
+
+		const { access_token } = (await response.json()) as {
+			access_token: string;
+		};
+
+		return { token: access_token };
+	}
+
+	private async generateAuthorizationCode(userId: string) {
+		const clientAccessToken = await this.createAccessToken([
+			'authorization:grant',
+		]);
+
+		const params = new URLSearchParams();
+		params.append('external_user_id', userId);
+		params.append(
+			'scope',
+			'accounts:read,balances:read,transactions:read,provider-consents:read',
+		);
+
+		const response = await fetch(`${this.BASE_URL}/oauth/authorization-grant`, {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${clientAccessToken}`,
+				'Content-Type': 'application/x-www-form-urlencoded',
+			},
+			body: params,
+		});
+
+		if (response.status !== 200) {
+			throw new OpenbankingError(
+				'Could not generate authorization code for user',
+			);
+		}
+
+		const { code } = (await response.json()) as { code: string };
+
+		return code;
 	}
 }
