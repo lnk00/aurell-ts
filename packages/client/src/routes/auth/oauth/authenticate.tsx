@@ -6,9 +6,5 @@ export const Route = createFileRoute('/auth/oauth/authenticate')({
 });
 
 function RouteComponent() {
-	return (
-		<div className="h-screen bg-base-200 flex items-center justify-center">
-			<OAuthAuth />
-		</div>
-	);
+	return <OAuthAuth />;
 }

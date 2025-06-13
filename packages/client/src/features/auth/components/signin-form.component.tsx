@@ -16,6 +16,7 @@ export function SigninForm() {
 			}}
 		>
 			<div className="card-body">
+				<div className="card-title text-5xl font-bold mb-5">Login</div>
 				<form.Field
 					name="email"
 					// biome-ignore lint/correctness/noChildrenProp: <explanation>
