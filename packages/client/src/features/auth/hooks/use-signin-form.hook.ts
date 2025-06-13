@@ -1,12 +1,12 @@
 import { getService } from '@/libs/ioc.lib';
-import { useNavigate } from '@tanstack/react-router';
 import { useForm } from '@tanstack/react-form';
-import z from 'zod/v4';
+import { useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
+import z from 'zod/v4';
 
 export function useSigninForm() {
 	const navigate = useNavigate();
-	const magicLinkService = getService('magiclink');
+	const orgService = getService('org');
 	const oauthService = getService('oauth');
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -14,7 +14,7 @@ export function useSigninForm() {
 		defaultValues: { email: '' },
 		onSubmit: async ({ value }) => {
 			setIsLoading(true);
-			await magicLinkService.send(value.email);
+			await orgService.discover(value.email);
 			setIsLoading(false);
 			navigate({
 				to: '/auth/magiclink/confirmation',

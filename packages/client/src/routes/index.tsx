@@ -1,11 +1,7 @@
 import { useSignout } from '@/features/auth/hooks/use-signout.hook';
-import {
-	getBankAccounts,
-	useGetBankAccounts,
-} from '@/features/bankaccount/api/get-bank-accounts.api';
+import { useGetBankAccounts } from '@/features/bankaccount/api/get-bank-accounts.api';
 import { getService } from '@/libs/ioc.lib';
 import { Link, createFileRoute, redirect } from '@tanstack/react-router';
-import { useEffect } from 'react';
 
 export const Route = createFileRoute('/')({
 	component: RouteComponent,
@@ -23,9 +19,10 @@ export const Route = createFileRoute('/')({
 });
 
 function RouteComponent() {
-	const { signout } = useSignout();
-	const aggregService = getService('aggreg');
 	const { data } = useGetBankAccounts();
+	const { signout } = useSignout();
+
+	const aggregService = getService('aggreg');
 
 	return (
 		<div className="drawer lg:drawer-open bg-base-100">

@@ -1,6 +1,8 @@
 import { stytchClient } from '@/libs/stytch.lib';
-import { StytchProvider } from '@stytch/react';
+import { StytchB2BProvider } from '@stytch/react/b2b';
 
 export function Provider({ children }: { children: React.ReactNode }) {
-	return <StytchProvider stytch={stytchClient}>{children}</StytchProvider>;
+	return (
+		<StytchB2BProvider stytch={stytchClient}>{children}</StytchB2BProvider>
+	);
 }
