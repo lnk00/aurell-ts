@@ -1,5 +1,5 @@
-import { useNavigate } from '@tanstack/react-router';
 import { EnvelopeIcon } from '@heroicons/react/24/outline';
+import { useNavigate } from '@tanstack/react-router';
 
 interface MagicLinkConfirmationProps {
 	email?: string;
@@ -9,8 +9,8 @@ export function MagicLinkConfirmation({ email }: MagicLinkConfirmationProps) {
 	const navigate = useNavigate();
 
 	return (
-		<div className="card w-96 bg-base-100 card-border">
-			<div className="card-body">
+		<div className="card w-96">
+			<div className="card-body items-center text-center">
 				<h2 className="card-title">Check your email</h2>
 				<div className="py-4 flex flex-col gap-4">
 					<div className="flex flex-col items-center">

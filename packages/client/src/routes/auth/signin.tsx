@@ -7,7 +7,9 @@ export const Route = createFileRoute('/auth/signin')({
 
 function RouteComponent() {
 	return (
-		<div className="h-screen bg-base-200 flex items-center justify-center">
+		<div className="h-screen flex flex-col gap-8 items-center justify-center">
+			<h1 className="text-xl font-bold absolute top-8 left-8">Aurell</h1>
+			<h2 className="text-6xl font-bold">Signin</h2>
 			<SigninForm />
 		</div>
 	);

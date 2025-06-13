@@ -9,24 +9,22 @@ export function SigninForm() {
 	return (
 		<form
 			noValidate
-			className="card w-96 bg-base-100 card-border"
+			className="w-96"
 			onSubmit={(e) => {
 				e.preventDefault();
 				form.handleSubmit();
 			}}
 		>
 			<div className="card-body">
-				<h2 className="card-title">Signin</h2>
 				<form.Field
 					name="email"
 					// biome-ignore lint/correctness/noChildrenProp: <explanation>
 					children={(field) => (
 						<>
-							<fieldset className="fieldset">
-								<legend className="fieldset-legend">With your email</legend>
+							<fieldset className="fieldset w-full">
 								<input
 									type="email"
-									className={`input ${!form.state.isValid && 'input-error'}`}
+									className={`input w-full ${!form.state.isValid && 'input-error'}`}
 									placeholder="Enter your email"
 									value={field.state.value}
 									onBlur={field.handleBlur}
@@ -42,7 +40,7 @@ export function SigninForm() {
 					)}
 				/>
 				<div className="card-actions">
-					<button className="btn btn-soft btn-block" type="submit">
+					<button className="btn btn-block" type="submit">
 						{isLoading && <span className="loading-spinner loading-xs" />}
 						Continue with email
 						{isLoading && (

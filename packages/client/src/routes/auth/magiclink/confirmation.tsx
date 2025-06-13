@@ -14,7 +14,7 @@ function RouteComponent() {
 	const { email } = useSearch({ from: '/auth/magiclink/confirmation' });
 
 	return (
-		<div className="h-screen bg-base-200 flex items-center justify-center">
+		<div className="h-screen flex items-center justify-center">
 			<MagicLinkConfirmation email={email} />
 		</div>
 	);
