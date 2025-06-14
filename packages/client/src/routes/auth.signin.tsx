@@ -1,4 +1,4 @@
-import { SigninForm } from '@/features/auth/components/signin-form.component';
+import { SigninComponent } from '@/features/auth/components/signin.component';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/auth/signin')({
@@ -6,5 +6,5 @@ export const Route = createFileRoute('/auth/signin')({
 });
 
 function RouteComponent() {
-	return <SigninForm />;
+	return <SigninComponent />;
 }

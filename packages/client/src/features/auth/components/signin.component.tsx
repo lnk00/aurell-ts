@@ -1,10 +1,10 @@
 import appleLogo from '@/assets/images/apple.svg';
 import googleLogo from '@/assets/images/google.svg';
-import { useSigninForm } from '../hooks/use-signin-form.hook';
+import { useSignin } from '../hooks/signin.hook';
 
-export function SigninForm() {
+export function SigninComponent() {
 	const { form, handleAppleSignin, handleGoogleSignin, isLoading } =
-		useSigninForm();
+		useSignin();
 
 	return (
 		<form

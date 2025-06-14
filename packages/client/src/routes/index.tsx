@@ -1,4 +1,4 @@
-import { useSignout } from '@/features/auth/hooks/use-signout.hook';
+import { useSignout } from '@/features/auth/hooks/signout.hook';
 import { useGetBankAccounts } from '@/features/bankaccount/api/get-bank-accounts.api';
 import { getService } from '@/libs/ioc.lib';
 import { Link, createFileRoute, redirect } from '@tanstack/react-router';

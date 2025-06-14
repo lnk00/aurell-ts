@@ -5,7 +5,7 @@ import { useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
 import z from 'zod/v4';
 
-export function useSigninForm() {
+export function useSignin() {
 	const navigate = useNavigate();
 	const oauthService = getService('oauth');
 	const [isLoading, setIsLoading] = useState(false);
