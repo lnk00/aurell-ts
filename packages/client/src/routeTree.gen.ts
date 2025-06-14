@@ -15,7 +15,6 @@ import { Route as AuthImport } from './routes/auth'
 import { Route as IndexImport } from './routes/index'
 import { Route as BankaccountLinkImport } from './routes/bankaccount.link'
 import { Route as AuthSigninImport } from './routes/auth.signin'
-import { Route as AuthAuthenticateImport } from './routes/auth.authenticate'
 import { Route as AuthOrgDiscoveryImport } from './routes/auth.org.discovery'
 import { Route as AuthOauthAuthenticateImport } from './routes/auth.oauth.authenticate'
 import { Route as AuthMagiclinkConfirmationImport } from './routes/auth.magiclink.confirmation'
@@ -44,12 +43,6 @@ const BankaccountLinkRoute = BankaccountLinkImport.update({
 const AuthSigninRoute = AuthSigninImport.update({
   id: '/signin',
   path: '/signin',
-  getParentRoute: () => AuthRoute,
-} as any)
-
-const AuthAuthenticateRoute = AuthAuthenticateImport.update({
-  id: '/authenticate',
-  path: '/authenticate',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -94,13 +87,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth'
       preLoaderRoute: typeof AuthImport
       parentRoute: typeof rootRoute
-    }
-    '/auth/authenticate': {
-      id: '/auth/authenticate'
-      path: '/authenticate'
-      fullPath: '/auth/authenticate'
-      preLoaderRoute: typeof AuthAuthenticateImport
-      parentRoute: typeof AuthImport
     }
     '/auth/signin': {
       id: '/auth/signin'
@@ -150,7 +136,6 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface AuthRouteChildren {
-  AuthAuthenticateRoute: typeof AuthAuthenticateRoute
   AuthSigninRoute: typeof AuthSigninRoute
   AuthMagiclinkAuthenticateRoute: typeof AuthMagiclinkAuthenticateRoute
   AuthMagiclinkConfirmationRoute: typeof AuthMagiclinkConfirmationRoute
@@ -159,7 +144,6 @@ interface AuthRouteChildren {
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
-  AuthAuthenticateRoute: AuthAuthenticateRoute,
   AuthSigninRoute: AuthSigninRoute,
   AuthMagiclinkAuthenticateRoute: AuthMagiclinkAuthenticateRoute,
   AuthMagiclinkConfirmationRoute: AuthMagiclinkConfirmationRoute,
@@ -172,7 +156,6 @@ const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRouteWithChildren
-  '/auth/authenticate': typeof AuthAuthenticateRoute
   '/auth/signin': typeof AuthSigninRoute
   '/bankaccount/link': typeof BankaccountLinkRoute
   '/auth/magiclink/authenticate': typeof AuthMagiclinkAuthenticateRoute
@@ -184,7 +167,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRouteWithChildren
-  '/auth/authenticate': typeof AuthAuthenticateRoute
   '/auth/signin': typeof AuthSigninRoute
   '/bankaccount/link': typeof BankaccountLinkRoute
   '/auth/magiclink/authenticate': typeof AuthMagiclinkAuthenticateRoute
@@ -197,7 +179,6 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/auth': typeof AuthRouteWithChildren
-  '/auth/authenticate': typeof AuthAuthenticateRoute
   '/auth/signin': typeof AuthSigninRoute
   '/bankaccount/link': typeof BankaccountLinkRoute
   '/auth/magiclink/authenticate': typeof AuthMagiclinkAuthenticateRoute
@@ -211,7 +192,6 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
-    | '/auth/authenticate'
     | '/auth/signin'
     | '/bankaccount/link'
     | '/auth/magiclink/authenticate'
@@ -222,7 +202,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
-    | '/auth/authenticate'
     | '/auth/signin'
     | '/bankaccount/link'
     | '/auth/magiclink/authenticate'
@@ -233,7 +212,6 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/auth'
-    | '/auth/authenticate'
     | '/auth/signin'
     | '/bankaccount/link'
     | '/auth/magiclink/authenticate'
@@ -276,17 +254,12 @@ export const routeTree = rootRoute
     "/auth": {
       "filePath": "auth.tsx",
       "children": [
-        "/auth/authenticate",
         "/auth/signin",
         "/auth/magiclink/authenticate",
         "/auth/magiclink/confirmation",
         "/auth/oauth/authenticate",
         "/auth/org/discovery"
       ]
-    },
-    "/auth/authenticate": {
-      "filePath": "auth.authenticate.tsx",
-      "parent": "/auth"
     },
     "/auth/signin": {
       "filePath": "auth.signin.tsx",

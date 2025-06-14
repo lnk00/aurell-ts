@@ -1,11 +1,11 @@
 import { EnvelopeIcon } from '@heroicons/react/24/outline';
 import { useNavigate } from '@tanstack/react-router';
 
-interface MagicLinkConfirmationProps {
+type Props = {
 	email?: string;
-}
+};
 
-export function MagicLinkConfirmation({ email }: MagicLinkConfirmationProps) {
+export function MailSentComponent({ email }: Props) {
 	const navigate = useNavigate();
 
 	return (

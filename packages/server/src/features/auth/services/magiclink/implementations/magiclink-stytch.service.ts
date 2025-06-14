@@ -18,7 +18,7 @@ export class MagicLinkStytchService implements MagicLinkService {
 	async sendEmail(email: string) {
 		const resp = await this.client.magicLinks.email.discovery.send({
 			email_address: email,
-			discovery_redirect_url: `${this.env.CLIENT_URL}/auth/authenticate`,
+			discovery_redirect_url: `${this.env.CLIENT_URL}/auth/magiclink/authenticate`,
 		});
 
 		if (resp.status_code !== 200) {
