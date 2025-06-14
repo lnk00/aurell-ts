@@ -1,4 +1,4 @@
-import { magiclinkVerify } from '@/features/auth/api/magiclink-verify.api';
+import { magiclinkVerify } from '@/features/auth/api/magiclink/verify.api';
 import { AuthenticateErrorComponent } from '@/features/auth/components/magiclink/error.component';
 import { OrgCreateComponent } from '@/features/auth/components/magiclink/org-create.component';
 import { OrgSelectComponent } from '@/features/auth/components/magiclink/org-select.component';

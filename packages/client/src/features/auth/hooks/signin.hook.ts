@@ -1,9 +1,9 @@
 import { getService } from '@/libs/ioc.lib';
-import { rpcClient } from '@/libs/rpc.lib';
 import { useForm } from '@tanstack/react-form';
 import { useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
 import z from 'zod/v4';
+import { magiclinkSend } from '../api/magiclink/send.api';
 
 export function useSignin() {
 	const navigate = useNavigate();
@@ -14,9 +14,7 @@ export function useSignin() {
 		defaultValues: { email: '' },
 		onSubmit: async ({ value }) => {
 			setIsLoading(true);
-			await rpcClient.api.auth.magiclink.send.$post({
-				form: { email: value.email },
-			});
+			await magiclinkSend(value.email);
 			setIsLoading(false);
 			navigate({
 				to: '/auth/magiclink/confirmation',
@@ -36,10 +34,12 @@ export function useSignin() {
 	});
 
 	const handleGoogleSignin = async () => {
+		//TODO: Use backend service
 		await oauthService.signinWithGoogle();
 	};
 
 	const handleAppleSignin = async () => {
+		//TODO: Use backend service
 		await oauthService.signinWithApple();
 	};
 
