@@ -13,6 +13,10 @@ const magicLinkVerifySchema = z.object({
 	token: z.string('token is required in the request body'),
 });
 
+const orgCreateSchema = z.object({
+	name: z.string('name is required in the request body'),
+});
+
 const authHandlers = new Hono<HonoContextType>()
 	.post(
 		'/magiclink/send',
@@ -41,6 +45,20 @@ const authHandlers = new Hono<HonoContextType>()
 			return c.json({
 				intermediateToken,
 				orgs,
+			});
+		},
+	)
+	.post(
+		'/org/create',
+		validator('form', (value) => Validate(value, orgCreateSchema)),
+		async (c) => {
+			const orgService = getService('org');
+			const { name } = c.req.valid('form');
+
+			const { orgId } = await orgService.create(name);
+
+			return c.json({
+				orgId,
 			});
 		},
 	);

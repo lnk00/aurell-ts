@@ -23,6 +23,6 @@ export const Route = createFileRoute('/auth/magiclink/authenticate')({
 
 function RouteComponent() {
 	const { orgs } = Route.useLoaderData();
-	if (!orgs) return <OrgCreateComponent />;
+	if (orgs.length === 0) return <OrgCreateComponent />;
 	return <OrgSelectComponent orgs={orgs} />;
 }

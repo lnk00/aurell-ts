@@ -1,6 +1,8 @@
 import { Container } from 'inversify';
 import { MagicLinkStytchService } from '../features/auth/services/magiclink/implementations/magiclink-stytch.service';
 import type { MagicLinkService } from '../features/auth/services/magiclink/magiclink.service';
+import { OrgStytchService } from '../features/auth/services/org/implementations/org-stytch.service';
+import type { OrgService } from '../features/auth/services/org/org.service';
 import { SessionStytchService } from '../features/auth/services/session/implementations/session-stytch.service';
 import type { SessionService } from '../features/auth/services/session/session.service';
 import { ObAccountTinkService } from '../features/bankaccount/services/ob-account/implementations/ob-account-tink.service';
@@ -15,6 +17,7 @@ let isServicesInitialized = false;
 export type ServiceTypeMap = {
 	session: SessionService;
 	magiclink: MagicLinkService;
+	org: OrgService;
 	obcore: ObCoreService;
 	obaccount: ObAccountService;
 };
@@ -28,6 +31,10 @@ export function initializeServices(env: Bindings) {
 
 	services.bind<MagicLinkService>('magiclink').toDynamicValue(() => {
 		return new MagicLinkStytchService(env);
+	});
+
+	services.bind<OrgService>('org').toDynamicValue(() => {
+		return new OrgStytchService(env);
 	});
 
 	services.bind<ObCoreService>('obcore').toDynamicValue(() => {

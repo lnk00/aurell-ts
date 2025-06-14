@@ -1,8 +1,10 @@
+import { injectable } from 'inversify';
 import * as stytch from 'stytch';
 import type { Bindings } from '../../../../../types/context.type';
 import { AuthError } from '../../../../core/types/errors.type';
 import type { MagicLinkService } from '../magiclink.service';
 
+@injectable()
 export class MagicLinkStytchService implements MagicLinkService {
 	env: Bindings;
 	client: stytch.B2BClient;
@@ -18,11 +20,14 @@ export class MagicLinkStytchService implements MagicLinkService {
 	async sendEmail(email: string) {
 		const resp = await this.client.magicLinks.email.discovery.send({
 			email_address: email,
+			//TODO: use env to set url
 			discovery_redirect_url: `${this.env.CLIENT_URL}/auth/magiclink/authenticate`,
 		});
 
 		if (resp.status_code !== 200) {
-			throw new AuthError(`Stytch API error: ${resp.status_code}`);
+			throw new AuthError(
+				`Could not send magic link email, the provider returned en error: ${resp.status_code}`,
+			);
 		}
 	}
 
@@ -32,7 +37,9 @@ export class MagicLinkStytchService implements MagicLinkService {
 		});
 
 		if (resp.status_code !== 200) {
-			throw new AuthError(`Stytch API error: ${resp.status_code}`);
+			throw new AuthError(
+				`Could not verify the token, the provider returned en error: ${resp.status_code}`,
+			);
 		}
 
 		return {
