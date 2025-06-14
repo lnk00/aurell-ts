@@ -22,7 +22,11 @@ export const Route = createFileRoute('/auth/magiclink/authenticate')({
 });
 
 function RouteComponent() {
-	const { orgs } = Route.useLoaderData();
-	if (orgs.length === 0) return <OrgCreateComponent />;
+	const { orgs, intermediateToken } = Route.useLoaderData();
+
+	if (orgs.length === 0) {
+		return <OrgCreateComponent token={intermediateToken} />;
+	}
+
 	return <OrgSelectComponent orgs={orgs} />;
 }

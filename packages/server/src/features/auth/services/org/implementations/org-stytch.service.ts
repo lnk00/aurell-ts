@@ -15,10 +15,11 @@ export class OrgStytchService implements OrgService {
 		});
 	}
 
-	async create(name: string) {
-		const resp = await this.client.organizations.create({
+	async create(name: string, intermediateToken: string) {
+		const resp = await this.client.discovery.organizations.create({
 			organization_name: name,
 			organization_slug: name.toLowerCase().replace(/\s+/g, '-'),
+			intermediate_session_token: intermediateToken,
 		});
 
 		if (resp.status_code !== 200) {
@@ -27,6 +28,6 @@ export class OrgStytchService implements OrgService {
 			);
 		}
 
-		return { orgId: resp.organization.organization_id };
+		return { sessionToken: resp.session_token, sessionJwt: resp.session_jwt };
 	}
 }

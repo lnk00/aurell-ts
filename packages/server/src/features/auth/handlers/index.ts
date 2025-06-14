@@ -15,6 +15,7 @@ const magicLinkVerifySchema = z.object({
 
 const orgCreateSchema = z.object({
 	name: z.string('name is required in the request body'),
+	token: z.string('token is required in the request body'),
 });
 
 const authHandlers = new Hono<HonoContextType>()
@@ -53,14 +54,16 @@ const authHandlers = new Hono<HonoContextType>()
 		validator('form', (value) => Validate(value, orgCreateSchema)),
 		async (c) => {
 			const orgService = getService('org');
-			const { name } = c.req.valid('form');
+			const { name, token } = c.req.valid('form');
 
-			const { orgId } = await orgService.create(name);
+			const { sessionToken, sessionJwt } = await orgService.create(name, token);
+
+			//TODO: set session cookie
 
 			return c.json({
-				orgId,
+				sessionToken,
+				sessionJwt,
 			});
 		},
 	);
-
 export default authHandlers;

@@ -3,16 +3,16 @@ import { useState } from 'react';
 import z from 'zod/v4';
 import { orgCreate } from '../api/org/create.api';
 
-export function useOrgCreate() {
+export function useOrgCreate(token: string) {
 	const [isLoading, setIsLoading] = useState(false);
 
 	const form = useForm({
 		defaultValues: { name: '' },
 		onSubmit: async ({ value }) => {
 			setIsLoading(true);
-			const { orgId } = await orgCreate(value.name);
+			const { sessionToken, sessionJwt } = await orgCreate(value.name, token);
 			setIsLoading(false);
-			console.log('Organization created successfully: ', orgId);
+			console.log('User successfully signed in: ', sessionToken, sessionJwt);
 		},
 		validators: {
 			onSubmit: ({ value }) => {

@@ -1,7 +1,11 @@
 import { useOrgCreate } from '../../hooks/org-create.hook';
 
-export function OrgCreateComponent() {
-	const { form, isLoading } = useOrgCreate();
+type Props = {
+	token: string;
+};
+
+export function OrgCreateComponent({ token }: Props) {
+	const { form, isLoading } = useOrgCreate(token);
 
 	return (
 		<form
