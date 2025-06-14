@@ -1,29 +1,29 @@
 import { injectable } from 'inversify';
-import type { SessionService } from '../session.service';
 import * as stytch from 'stytch';
 import type { Bindings } from '../../../../../types/context.type';
+import type { SessionService } from '../session.service';
 
 @injectable()
 export class SessionStytchService implements SessionService {
 	env: Bindings;
-	client: stytch.Client;
+	client: stytch.B2BClient;
 
 	constructor(bindings: Bindings) {
 		this.env = bindings;
-		this.client = new stytch.Client({
+		this.client = new stytch.B2BClient({
 			project_id: this.env.STYTCH_PROJECT_ID,
 			secret: this.env.STYTCH_SECRET,
 		});
 	}
 
 	async verifyJwt(token: string) {
-		const { session } = await this.client.sessions.authenticateJwt({
+		const { member_session } = await this.client.sessions.authenticateJwt({
 			session_jwt: token,
 		});
 
 		return {
-			userId: session.user_id,
-			sessionId: session.session_id,
+			userId: member_session.member_id,
+			sessionId: member_session.member_session_id,
 		};
 	}
 }

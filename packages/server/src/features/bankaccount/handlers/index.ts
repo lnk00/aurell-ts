@@ -6,6 +6,7 @@ import { bankConnections } from '../../../libs/db/schemas/bank-connection.schema
 import { getService } from '../../../libs/ioc.lib';
 import { Validate } from '../../../libs/validator.lib';
 import type { HonoContextType } from '../../../types/context.type';
+import { guardMiddleware } from '../../auth/middlewares/guard.middleware';
 import { DatabaseError } from '../../core/types/errors.type';
 
 const schema = z.object({
@@ -13,6 +14,7 @@ const schema = z.object({
 });
 
 const openbankingHandlers = new Hono<HonoContextType>()
+	.use('*', guardMiddleware)
 	.get('/link/code', async (c) => {
 		const userId = c.get('userId');
 		const obCoreService = getService('obcore');

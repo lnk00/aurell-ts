@@ -1,0 +1,15 @@
+meta {
+  name: verify
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3000/api/auth/magiclink/verify
+  body: formUrlEncoded
+  auth: inherit
+}
+
+body:form-urlencoded {
+  token: ocKoweDx7H6f8tlguFkIDCne36_6G1QDFdkbnlSlaobm
+}

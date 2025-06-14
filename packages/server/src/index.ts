@@ -1,7 +1,7 @@
 import { Hono } from 'hono';
 import { HTTPException } from 'hono/http-exception';
 import type { ContentfulStatusCode } from 'hono/utils/http-status';
-import { guardMiddleware } from './features/auth/middlewares/guard.middleware';
+import authHandlers from './features/auth/handlers';
 import openbankingHandlers from './features/bankaccount/handlers';
 import coreHandlers from './features/core/handlers';
 import { corsMiddleware } from './features/core/middlewares/cors.middleware';
@@ -13,7 +13,6 @@ const app = new Hono<HonoContextType>();
 
 app.use('*', serviceMiddleware);
 app.use('*', corsMiddleware);
-app.use('*', guardMiddleware);
 
 app.onError((err, c) => {
 	let status: ContentfulStatusCode = 500;
@@ -41,6 +40,7 @@ app.onError((err, c) => {
 });
 
 const routes = app
+	.route('/api/auth', authHandlers)
 	.route('/api/core', coreHandlers)
 	.route('/api/profile', profileHandlers)
 	.route('/api/ob', openbankingHandlers);

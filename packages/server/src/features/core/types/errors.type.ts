@@ -28,3 +28,10 @@ export class NotAuthenticatedError extends HTTPException {
 		this.name = 'NotAuthenticatedError';
 	}
 }
+
+export class AuthError extends HTTPException {
+	constructor(message: string, status: ContentfulStatusCode = 400) {
+		super(status, { message });
+		this.name = 'AuthError';
+	}
+}

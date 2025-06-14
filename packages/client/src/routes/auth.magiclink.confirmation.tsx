@@ -11,7 +11,7 @@ export const Route = createFileRoute('/auth/magiclink/confirmation')({
 });
 
 function RouteComponent() {
-	const { email } = useSearch({ from: '/_auth/auth/magiclink/confirmation' });
+	const { email } = useSearch({ from: '/auth/magiclink/confirmation' });
 
 	return <MagicLinkConfirmation email={email} />;
 }
