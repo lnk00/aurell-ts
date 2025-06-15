@@ -1,7 +1,7 @@
 import { Hono } from 'hono';
-import { setCookie } from 'hono/cookie';
 import { validator } from 'hono/validator';
 import z from 'zod/v4';
+import { setCookie } from '../../../libs/cookie.lib';
 import { getService } from '../../../libs/ioc.lib';
 import { Validate } from '../../../libs/validator.lib';
 import type { HonoContextType } from '../../../types/context.type';
@@ -64,6 +64,9 @@ const authHandlers = new Hono<HonoContextType>()
 
 			const { sessionToken, sessionJwt } = await orgService.create(name, token);
 
+			setCookie(c, 'aurell_session', sessionToken);
+			setCookie(c, 'aurell_session_jwt', sessionJwt);
+
 			return c.json({
 				sessionToken,
 				sessionJwt,
@@ -79,16 +82,8 @@ const authHandlers = new Hono<HonoContextType>()
 
 			const { sessionToken, sessionJwt } = await orgService.signin(id, token);
 
-			const cookieOptions: Parameters<typeof setCookie>[3] = {
-				sameSite: 'Lax',
-			};
-			if (!c.env.CLIENT_URL.includes('localhost')) {
-				cookieOptions.domain = '.aurell.app';
-				cookieOptions.secure = true;
-			}
-
-			setCookie(c, 'aurell_session', sessionToken, cookieOptions);
-			setCookie(c, 'aurell_session_jwt', sessionJwt, cookieOptions);
+			setCookie(c, 'aurell_session', sessionToken);
+			setCookie(c, 'aurell_session_jwt', sessionJwt);
 
 			return c.json({
 				sessionToken,
