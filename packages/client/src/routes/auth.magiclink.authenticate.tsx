@@ -28,5 +28,5 @@ function RouteComponent() {
 		return <OrgCreateComponent token={intermediateToken} />;
 	}
 
-	return <OrgSelectComponent orgs={orgs} />;
+	return <OrgSelectComponent orgs={orgs} token={intermediateToken} />;
 }

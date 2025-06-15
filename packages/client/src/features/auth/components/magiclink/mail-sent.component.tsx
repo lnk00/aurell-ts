@@ -22,7 +22,7 @@ export function MailSentComponent({ email }: Props) {
 						<span className="font-bold">{email || 'your email address'}</span>.
 					</p>
 
-					<p className="text-center text-sm text-gray-500">
+					<p className="text-center text-sm opacity-50">
 						Please check your inbox and click on the link in the email to
 						complete the sign in process.
 					</p>

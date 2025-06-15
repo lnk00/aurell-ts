@@ -18,6 +18,11 @@ const orgCreateSchema = z.object({
 	token: z.string('token is required in the request body'),
 });
 
+const orgSigninSchema = z.object({
+	id: z.string('id is required in the request body'),
+	token: z.string('token is required in the request body'),
+});
+
 const authHandlers = new Hono<HonoContextType>()
 	.post(
 		'/magiclink/send',
@@ -57,6 +62,23 @@ const authHandlers = new Hono<HonoContextType>()
 			const { name, token } = c.req.valid('form');
 
 			const { sessionToken, sessionJwt } = await orgService.create(name, token);
+
+			//TODO: set session cookie
+
+			return c.json({
+				sessionToken,
+				sessionJwt,
+			});
+		},
+	)
+	.post(
+		'/org/signin',
+		validator('form', (value) => Validate(value, orgSigninSchema)),
+		async (c) => {
+			const orgService = getService('org');
+			const { id, token } = c.req.valid('form');
+
+			const { sessionToken, sessionJwt } = await orgService.signin(id, token);
 
 			//TODO: set session cookie
 

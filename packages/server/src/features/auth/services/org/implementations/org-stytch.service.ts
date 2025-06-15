@@ -30,4 +30,19 @@ export class OrgStytchService implements OrgService {
 
 		return { sessionToken: resp.session_token, sessionJwt: resp.session_jwt };
 	}
+
+	async signin(id: string, intermediateToken: string) {
+		const resp = await this.client.discovery.intermediateSessions.exchange({
+			organization_id: id,
+			intermediate_session_token: intermediateToken,
+		});
+
+		if (resp.status_code !== 200) {
+			throw new AuthError(
+				`Could not sign the user in the organizations ${id}, the provider returned en error: ${resp.status_code}`,
+			);
+		}
+
+		return { sessionToken: resp.session_token, sessionJwt: resp.session_jwt };
+	}
 }
