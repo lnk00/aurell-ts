@@ -5,7 +5,7 @@ import { getService } from '../../../../libs/ioc.lib';
 import { Validate } from '../../../../libs/validator.lib';
 
 const magicLinkVerifySchema = z.object({
-	token: z.string('token is required in the request body'),
+	token: z.string('a token is required in the request body'),
 });
 
 export const magiclinkVerifyController = factory.createHandlers(
