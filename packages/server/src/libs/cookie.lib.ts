@@ -1,5 +1,8 @@
 import type { Context } from 'hono';
-import { setCookie as setCookieHono } from 'hono/cookie';
+import {
+	getCookie as getCookieHono,
+	setCookie as setCookieHono,
+} from 'hono/cookie';
 import type { HonoContextType } from '../types/context.type';
 
 export function setCookie(
@@ -16,4 +19,11 @@ export function setCookie(
 	}
 
 	setCookieHono(c, name, value, cookieOptions);
+}
+
+export function getCookie(
+	c: Context<HonoContextType>,
+	name: 'aurell_session' | 'aurell_session_jwt',
+) {
+	return getCookieHono(c, name);
 }

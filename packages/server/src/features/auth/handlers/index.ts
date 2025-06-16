@@ -1,7 +1,7 @@
 import { Hono } from 'hono';
 import { validator } from 'hono/validator';
 import z from 'zod/v4';
-import { setCookie } from '../../../libs/cookie.lib';
+import { getCookie, setCookie } from '../../../libs/cookie.lib';
 import { getService } from '../../../libs/ioc.lib';
 import { Validate } from '../../../libs/validator.lib';
 import type { HonoContextType } from '../../../types/context.type';
@@ -25,6 +25,24 @@ const orgSigninSchema = z.object({
 });
 
 const authHandlers = new Hono<HonoContextType>()
+	.post('/authenticate', async (c) => {
+		let authenticated = false;
+		const sessionService = getService('session');
+
+		const jwt = getCookie(c, 'aurell_session_jwt');
+
+		if (jwt) {
+			const { sessionJwt } = await sessionService.verifyJwt(jwt);
+
+			if (sessionJwt) {
+				authenticated = true;
+			}
+		}
+
+		return c.json({
+			authenticated,
+		});
+	})
 	.post(
 		'/magiclink/send',
 		validator('form', (value) => Validate(value, magicLinkSendSchema)),

@@ -1,3 +1,4 @@
+import { authenticate } from '@/features/auth/api/session/authenticate.api';
 import { useSignout } from '@/features/auth/hooks/signout.hook';
 import { useGetBankAccounts } from '@/features/bankaccount/api/get-bank-accounts.api';
 import { getService } from '@/libs/ioc.lib';
@@ -6,8 +7,8 @@ import { Link, createFileRoute, redirect } from '@tanstack/react-router';
 export const Route = createFileRoute('/')({
 	component: RouteComponent,
 	beforeLoad: async () => {
-		const sessionService = getService('session');
-		if (!sessionService.isUserAuthenticated()) {
+		const { authenticated } = await authenticate();
+		if (!authenticated) {
 			throw redirect({
 				to: '/auth/signin',
 				search: {
