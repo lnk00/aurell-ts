@@ -7,7 +7,7 @@ export const signoutController = factory.createHandlers(async (c) => {
 
 	const sessionToken = getCookie(c, 'aurell_session');
 	if (sessionToken) {
-		await sessionService.signOut(sessionToken);
+		await sessionService.signout(sessionToken);
 		deleteCookie(c, 'aurell_session');
 		deleteCookie(c, 'aurell_session_jwt');
 	}

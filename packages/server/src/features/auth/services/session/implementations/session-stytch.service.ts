@@ -29,7 +29,7 @@ export class SessionStytchService implements SessionService {
 		};
 	}
 
-	async signOut(token: string) {
+	async signout(token: string) {
 		await this.client.sessions.revoke({ session_token: token });
 	}
 }
