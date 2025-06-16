@@ -1,10 +1,10 @@
 import { Hono } from 'hono';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { getServiceMockWith } from '../../../../../../test.config';
-import { getCookie } from '../../../../../libs/cookie.lib';
-import { getService } from '../../../../../libs/ioc.lib';
-import type { HonoContextType } from '../../../../../types/context.type';
-import { authtenticateController } from '../../../controllers/authenticate.controller';
+import { getServiceMockWith } from '../../../../../test.config';
+import { getCookie } from '../../../../libs/cookie.lib';
+import { getService } from '../../../../libs/ioc.lib';
+import type { HonoContextType } from '../../../../types/context.type';
+import { authtenticateController } from '../../controllers/authenticate.controller';
 
 describe('AUTH', () => {
 	describe('CONTROLLERS', () => {
