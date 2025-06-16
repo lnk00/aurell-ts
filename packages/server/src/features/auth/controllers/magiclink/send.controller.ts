@@ -5,7 +5,7 @@ import { getService } from '../../../../libs/ioc.lib';
 import { Validate } from '../../../../libs/validator.lib';
 
 const magicLinkSendSchema = z.object({
-	email: z.email('email is required in the request body'),
+	email: z.email('a valid email is required in the request body'),
 });
 
 export const magiclinkSendController = factory.createHandlers(
