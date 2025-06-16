@@ -1,7 +1,7 @@
 import { Hono } from 'hono';
 import { validator } from 'hono/validator';
 import z from 'zod/v4';
-import { getCookie, setCookie } from '../../../libs/cookie.lib';
+import { deleteCookie, getCookie, setCookie } from '../../../libs/cookie.lib';
 import { getService } from '../../../libs/ioc.lib';
 import { Validate } from '../../../libs/validator.lib';
 import type { HonoContextType } from '../../../types/context.type';
@@ -41,6 +41,20 @@ const authHandlers = new Hono<HonoContextType>()
 
 		return c.json({
 			authenticated,
+		});
+	})
+	.post('/signout', async (c) => {
+		const sessionService = getService('session');
+
+		const sessionToken = getCookie(c, 'aurell_session');
+		if (sessionToken) {
+			await sessionService.signOut(sessionToken);
+			deleteCookie(c, 'aurell_session');
+			deleteCookie(c, 'aurell_session_jwt');
+		}
+
+		return c.json({
+			success: true,
 		});
 	})
 	.post(

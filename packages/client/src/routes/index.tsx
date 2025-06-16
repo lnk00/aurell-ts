@@ -1,4 +1,4 @@
-import { authenticate } from '@/features/auth/api/session/authenticate.api';
+import { authenticate } from '@/features/auth/api/org/authenticate.api';
 import { useSignout } from '@/features/auth/hooks/signout.hook';
 import { useGetBankAccounts } from '@/features/bankaccount/api/get-bank-accounts.api';
 import { getService } from '@/libs/ioc.lib';
@@ -20,7 +20,7 @@ export const Route = createFileRoute('/')({
 });
 
 function RouteComponent() {
-	// const { data } = useGetBankAccounts();
+	const { data } = useGetBankAccounts();
 	const { signout } = useSignout();
 
 	const aggregService = getService('aggreg');
@@ -54,12 +54,12 @@ function RouteComponent() {
 							<div className="card card-border border-base-300 bg-base-100 w-96">
 								<div className="card-body">
 									<h2 className="card-title">Bank accounts</h2>
-									{/* {data?.accounts.map((account) => (
+									{data?.accounts.map((account) => (
 										<div key={account.number}>
 											<p>{account.name}</p>
 											<p>{account.balance}</p>
 										</div>
-									))} */}
+									))}
 								</div>
 							</div>
 						</div>
@@ -90,7 +90,7 @@ function RouteComponent() {
 						<button
 							className="btn w-full"
 							type="button"
-							onClick={() => signout()}
+							onClick={async () => await signout()}
 						>
 							Sign out
 						</button>

@@ -1,18 +1,20 @@
 import { useForm } from '@tanstack/react-form';
+import { useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
 import z from 'zod/v4';
 import { orgCreate } from '../api/org/create.api';
 
 export function useOrgCreate(token: string) {
+	const navigate = useNavigate();
 	const [isLoading, setIsLoading] = useState(false);
 
 	const form = useForm({
 		defaultValues: { name: '' },
 		onSubmit: async ({ value }) => {
 			setIsLoading(true);
-			const { sessionToken, sessionJwt } = await orgCreate(value.name, token);
+			await orgCreate(value.name, token);
 			setIsLoading(false);
-			console.log('User successfully signed in: ', sessionToken, sessionJwt);
+			navigate({ to: '/' });
 		},
 		validators: {
 			onSubmit: ({ value }) => {

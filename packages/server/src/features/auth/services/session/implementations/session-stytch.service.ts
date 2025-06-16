@@ -28,4 +28,8 @@ export class SessionStytchService implements SessionService {
 			sessionJwt: session_jwt,
 		};
 	}
+
+	async signOut(token: string) {
+		await this.client.sessions.revoke({ session_token: token });
+	}
 }
