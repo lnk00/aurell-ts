@@ -4,8 +4,8 @@ import { getService } from '../../../libs/ioc.lib';
 
 export const signoutController = factory.createHandlers(async (c) => {
 	const sessionService = getService('session');
-
 	const sessionToken = getCookie(c, 'aurell_session');
+
 	if (sessionToken) {
 		await sessionService.signout(sessionToken);
 		deleteCookie(c, 'aurell_session');
@@ -13,6 +13,6 @@ export const signoutController = factory.createHandlers(async (c) => {
 	}
 
 	return c.json({
-		success: true,
+		success: sessionToken !== undefined,
 	});
 });
