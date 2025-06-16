@@ -6,8 +6,8 @@ import { getService } from '../../../../libs/ioc.lib';
 import { Validate } from '../../../../libs/validator.lib';
 
 const orgCreateSchema = z.object({
-	name: z.string('name is required in the request body'),
-	token: z.string('token is required in the request body'),
+	name: z.string('a name is required in the request body'),
+	token: z.string('a token is required in the request body'),
 });
 
 export const orgCreateController = factory.createHandlers(
