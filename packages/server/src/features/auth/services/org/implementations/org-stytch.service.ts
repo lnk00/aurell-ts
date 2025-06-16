@@ -1,6 +1,6 @@
 import * as stytch from 'stytch';
 import type { Bindings } from '../../../../../types/context.type';
-import { AuthError } from '../../../../core/types/errors.type';
+import { AuthError } from '../../../../../types/errors.type';
 import type { OrgService } from '../org.service';
 
 export class OrgStytchService implements OrgService {

@@ -1,7 +1,7 @@
 import { getCookie, setCookie } from '../../../libs/cookie.lib';
 import { factory } from '../../../libs/factory.lib';
 import { getService } from '../../../libs/ioc.lib';
-import { NotAuthenticatedError } from '../../core/types/errors.type';
+import { NotAuthenticatedError } from '../../../types/errors.type';
 
 export const guardMiddleware = factory.createMiddleware(async (c, next) => {
 	const sessionService = getService('session');

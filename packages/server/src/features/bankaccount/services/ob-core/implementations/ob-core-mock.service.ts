@@ -1,5 +1,5 @@
 import { injectable } from 'inversify';
-import { OpenbankingError } from '../../../../core/types/errors.type';
+import { OpenbankingError } from '../../../../../types/errors.type';
 import type { ObCoreService } from '../ob-core.service';
 
 type AccessTokenScopes = 'user:create' | 'authorization:grant';

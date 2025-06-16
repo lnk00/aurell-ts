@@ -1,11 +1,13 @@
+import { Hono } from 'hono';
 import { vi } from 'vitest';
 import { MagicLinkMockService } from './src/features/auth/services/magiclink/implementations/magiclink-mock.service';
 import { OrgMockService } from './src/features/auth/services/org/implementations/org-mock.service';
 import { SessionMockService } from './src/features/auth/services/session/implementations/session-mock.service';
 import { ObAccountMockService } from './src/features/bankaccount/services/ob-account/implementations/ob-account-mock.service';
 import { ObCoreMockService } from './src/features/bankaccount/services/ob-core/implementations/ob-core-mock.service';
+import { handleError } from './src/libs/error/error.lib';
 import type { ServiceTypeMap } from './src/libs/ioc.lib';
-import type { Bindings } from './src/types/context.type';
+import type { Bindings, HonoContextType } from './src/types/context.type';
 
 export const MOCK_ENV: Bindings = {
 	DB: {
@@ -50,3 +52,7 @@ export const defaultServiceMock: ServiceTypeMap = {
 	obcore: new ObCoreMockService(),
 	obaccount: new ObAccountMockService(),
 };
+
+export function getConfiguredApp() {
+	return new Hono<HonoContextType>().onError(handleError);
+}

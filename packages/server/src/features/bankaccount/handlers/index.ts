@@ -7,7 +7,7 @@ import { getService } from '../../../libs/ioc.lib';
 import { Validate } from '../../../libs/validator.lib';
 import type { HonoContextType } from '../../../types/context.type';
 import { guardMiddleware } from '../../auth/middlewares/guard.middleware';
-import { DatabaseError } from '../../core/types/errors.type';
+import { DatabaseError } from '../../../types/errors.type';
 
 const schema = z.object({
 	bankAccountId: z.string('bankAccountId is required in the request body'),

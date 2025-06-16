@@ -1,6 +1,9 @@
-import { Hono } from 'hono';
+import type { Hono } from 'hono';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { getServiceMockWith } from '../../../../../test.config';
+import {
+	getConfiguredApp,
+	getServiceMockWith,
+} from '../../../../../test.config';
 import { deleteCookie, getCookie } from '../../../../libs/cookie.lib';
 import { getService } from '../../../../libs/ioc.lib';
 import type { HonoContextType } from '../../../../types/context.type';
@@ -12,7 +15,7 @@ describe('AUTH', () => {
 			let app: Hono<HonoContextType>;
 
 			beforeEach(() => {
-				app = new Hono<HonoContextType>().post('/test', ...signoutController);
+				app = getConfiguredApp().post('/test', ...signoutController);
 
 				vi.clearAllMocks();
 			});

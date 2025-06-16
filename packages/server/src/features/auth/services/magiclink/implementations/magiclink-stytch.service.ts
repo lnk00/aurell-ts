@@ -1,7 +1,7 @@
 import { injectable } from 'inversify';
 import * as stytch from 'stytch';
 import type { Bindings } from '../../../../../types/context.type';
-import { AuthError } from '../../../../core/types/errors.type';
+import { AuthError } from '../../../../../types/errors.type';
 import type { MagicLinkService } from '../magiclink.service';
 
 @injectable()

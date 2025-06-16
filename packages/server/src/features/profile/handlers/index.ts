@@ -6,7 +6,7 @@ import { users } from '../../../libs/db/schemas/user.schema';
 import { Validate } from '../../../libs/validator.lib';
 import type { HonoContextType } from '../../../types/context.type';
 import { guardMiddleware } from '../../auth/middlewares/guard.middleware';
-import { DatabaseError } from '../../core/types/errors.type';
+import { DatabaseError } from '../../../types/errors.type';
 
 const schema = z.object({
 	userId: z.string('userId is required in the request body'),

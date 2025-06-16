@@ -1,6 +1,9 @@
-import { Hono } from 'hono';
+import type { Hono } from 'hono';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { getServiceMockWith } from '../../../../../../test.config';
+import {
+	getConfiguredApp,
+	getServiceMockWith,
+} from '../../../../../../test.config';
 import { getService } from '../../../../../libs/ioc.lib';
 import type { HonoContextType } from '../../../../../types/context.type';
 import { magiclinkSendController } from '../../../controllers/magiclink/send.controller';
@@ -11,11 +14,7 @@ describe('AUTH', () => {
 			let app: Hono<HonoContextType>;
 
 			beforeEach(() => {
-				app = new Hono<HonoContextType>().post(
-					'/test',
-					...magiclinkSendController,
-				);
-
+				app = getConfiguredApp().post('/test', ...magiclinkSendController);
 				vi.clearAllMocks();
 			});
 
@@ -53,6 +52,12 @@ describe('AUTH', () => {
 
 					expect(res.status).toBe(400);
 					expect(spySendEmail).not.toHaveBeenCalledWith();
+					expect(await res.json()).toMatchObject({
+						error: {
+							code: 'TypeValidationError',
+							message: 'a valid email is required in the request body',
+						},
+					});
 				});
 			});
 		});
