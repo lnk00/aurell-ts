@@ -1,4 +1,3 @@
-import { getService } from '@/libs/ioc.lib';
 import { useForm } from '@tanstack/react-form';
 import { useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
@@ -7,7 +6,6 @@ import { magiclinkSend } from '../api/magiclink/send.api';
 
 export function useSignin() {
 	const navigate = useNavigate();
-	const oauthService = getService('oauth');
 	const [isLoading, setIsLoading] = useState(false);
 
 	const form = useForm({
@@ -35,12 +33,10 @@ export function useSignin() {
 
 	const handleGoogleSignin = async () => {
 		//TODO: Use backend service
-		await oauthService.signinWithGoogle();
 	};
 
 	const handleAppleSignin = async () => {
 		//TODO: Use backend service
-		await oauthService.signinWithApple();
 	};
 
 	return { form, handleGoogleSignin, handleAppleSignin, isLoading };

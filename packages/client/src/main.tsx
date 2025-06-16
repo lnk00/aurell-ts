@@ -1,9 +1,8 @@
+import { RouterProvider, createRouter } from '@tanstack/react-router';
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
-import { RouterProvider, createRouter } from '@tanstack/react-router';
-import * as TanStackQueryProvider from './providers/query.provider';
-import * as StytchProvider from './providers/stytch.provider';
 import * as CookieProvider from './providers/cookie.provider';
+import * as TanStackQueryProvider from './providers/query.provider';
 
 // Import the generated route tree
 import { routeTree } from './routeTree.gen';
@@ -37,11 +36,9 @@ if (rootElement && !rootElement.innerHTML) {
 	root.render(
 		<StrictMode>
 			<CookieProvider.Provider>
-				<StytchProvider.Provider>
-					<TanStackQueryProvider.Provider>
-						<RouterProvider router={router} />
-					</TanStackQueryProvider.Provider>
-				</StytchProvider.Provider>
+				<TanStackQueryProvider.Provider>
+					<RouterProvider router={router} />
+				</TanStackQueryProvider.Provider>
 			</CookieProvider.Provider>
 		</StrictMode>,
 	);

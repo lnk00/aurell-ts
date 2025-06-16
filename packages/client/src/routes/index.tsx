@@ -20,7 +20,7 @@ export const Route = createFileRoute('/')({
 });
 
 function RouteComponent() {
-	const { data } = useGetBankAccounts();
+	// const { data } = useGetBankAccounts();
 	const { signout } = useSignout();
 
 	const aggregService = getService('aggreg');
@@ -54,12 +54,12 @@ function RouteComponent() {
 							<div className="card card-border border-base-300 bg-base-100 w-96">
 								<div className="card-body">
 									<h2 className="card-title">Bank accounts</h2>
-									{data?.accounts.map((account) => (
+									{/* {data?.accounts.map((account) => (
 										<div key={account.number}>
 											<p>{account.name}</p>
 											<p>{account.balance}</p>
 										</div>
-									))}
+									))} */}
 								</div>
 							</div>
 						</div>
