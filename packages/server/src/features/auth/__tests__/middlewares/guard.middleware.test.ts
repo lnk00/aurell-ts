@@ -1,14 +1,15 @@
 import { type Context, Hono } from 'hono';
-import { getCookie } from 'hono/cookie';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { getServiceMockWith, MOCK_ENV } from '../../../../../test.config';
+import { MOCK_ENV, getServiceMockWith } from '../../../../../test.config';
+import { getCookie } from '../../../../libs/cookie.lib';
 import { getService } from '../../../../libs/ioc.lib';
-import { guardMiddleware } from '../../middlewares/guard.middleware';
 import type { HonoContextType } from '../../../../types/context.type';
-import { SessionMockServiceVerifyJwtThrow } from '../mocks/session.service.mock';
+import { guardMiddleware } from '../../middlewares/guard.middleware';
+import { SessionMockServiceVerifyJwtThrow } from '../../services/session/implementations/session-mock.service';
 
-vi.mock('hono/cookie', () => ({
+vi.mock('../../../../libs/cookie.lib', () => ({
 	getCookie: vi.fn(),
+	setCookie: vi.fn(),
 }));
 
 vi.mock('../../../../libs/ioc.lib', () => ({

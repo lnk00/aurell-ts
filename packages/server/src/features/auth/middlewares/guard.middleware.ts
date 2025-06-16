@@ -1,5 +1,4 @@
-import { getCookie } from 'hono/cookie';
-import { setCookie } from '../../../libs/cookie.lib';
+import { getCookie, setCookie } from '../../../libs/cookie.lib';
 import { factory } from '../../../libs/factory.lib';
 import { getService } from '../../../libs/ioc.lib';
 import { NotAuthenticatedError } from '../../core/types/errors.type';
