@@ -7,16 +7,6 @@ import type { HonoContextType } from '../../../../types/context.type';
 import { guardMiddleware } from '../../middlewares/guard.middleware';
 import { SessionMockServiceVerifyJwtThrow } from '../../services/session/implementations/session-mock.service';
 
-vi.mock('../../../../libs/cookie.lib', () => ({
-	getCookie: vi.fn(),
-	setCookie: vi.fn(),
-}));
-
-vi.mock('../../../../libs/ioc.lib', () => ({
-	getService: vi.fn(),
-	initializeServices: vi.fn(),
-}));
-
 describe('AUTH', () => {
 	describe('MIDDLEWARES', () => {
 		describe('GUARD MIDDLEWARE', () => {

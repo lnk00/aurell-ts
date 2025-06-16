@@ -6,17 +6,6 @@ import { getService } from '../../../../../libs/ioc.lib';
 import type { HonoContextType } from '../../../../../types/context.type';
 import { signoutController } from '../../../controllers/signout.controller';
 
-vi.mock('../../../../../libs/cookie.lib', () => ({
-	getCookie: vi.fn(),
-	setCookie: vi.fn(),
-	deleteCookie: vi.fn(),
-}));
-
-vi.mock('../../../../../libs/ioc.lib', () => ({
-	getService: vi.fn(),
-	initializeServices: vi.fn(),
-}));
-
 describe('AUTH', () => {
 	describe('CONTROLLERS', () => {
 		describe('SIGNOUT', () => {
