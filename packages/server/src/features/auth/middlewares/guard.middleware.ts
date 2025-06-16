@@ -1,5 +1,6 @@
 import type { Context, Next } from 'hono';
 import { getCookie } from 'hono/cookie';
+import { setCookie } from '../../../libs/cookie.lib';
 import { getService } from '../../../libs/ioc.lib';
 import type { HonoContextType } from '../../../types/context.type';
 import { NotAuthenticatedError } from '../../core/types/errors.type';
@@ -19,11 +20,13 @@ export const guardMiddleware = async (
 	}
 
 	try {
-		const { userId, sessionId } = await sessionService.verifyJwt(jwt);
+		const { userId, sessionId, sessionJwt } =
+			await sessionService.verifyJwt(jwt);
 
 		if (sessionId && userId) {
 			c.set('userId', userId);
 			c.set('sessionId', sessionId);
+			setCookie(c, 'aurell_session_jwt', sessionJwt);
 		}
 
 		return next();

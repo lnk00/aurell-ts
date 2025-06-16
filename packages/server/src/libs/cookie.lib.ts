@@ -4,7 +4,7 @@ import type { HonoContextType } from '../types/context.type';
 
 export function setCookie(
 	c: Context<HonoContextType>,
-	name: string,
+	name: 'aurell_session' | 'aurell_session_jwt',
 	value: string,
 ) {
 	const cookieOptions: Parameters<typeof setCookieHono>[3] = {
