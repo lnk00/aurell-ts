@@ -1,8 +1,10 @@
-import { OpenbankingError } from '../../../core/types/errors.type';
-import type { ObCoreService } from '../../services/ob-core/ob-core.service';
+import { injectable } from 'inversify';
+import { OpenbankingError } from '../../../../core/types/errors.type';
+import type { ObCoreService } from '../ob-core.service';
 
 type AccessTokenScopes = 'user:create' | 'authorization:grant';
 
+@injectable()
 export class ObCoreMockService implements ObCoreService {
 	async getLinkCode(userId: string) {
 		await this.createUser(userId);
@@ -12,6 +14,10 @@ export class ObCoreMockService implements ObCoreService {
 		);
 
 		return { linkCode: delegatedAuthCode };
+	}
+
+	async getUserAccessToken(_: string) {
+		return { token: 'test-user-access-token' };
 	}
 
 	private async createUser(_: string) {
@@ -37,6 +43,10 @@ export class ObCoreMockServiceCreateDelegatedAuthThrow
 		await this.createDelegatedAuth(userId, 'test-hint');
 
 		return { linkCode: '' };
+	}
+
+	async getUserAccessToken(_: string) {
+		return { token: 'test-user-access-token' };
 	}
 
 	private async createUser(_: string) {

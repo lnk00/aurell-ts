@@ -1,4 +1,4 @@
-import type { SessionService } from '../../services/session/session.service';
+import type { SessionService } from '../session.service';
 
 export class SessionMockService implements SessionService {
 	async verifyJwt(_: string) {
