@@ -12,10 +12,7 @@ describe('AUTH', () => {
 			let app: Hono<HonoContextType>;
 
 			beforeEach(() => {
-				app = new Hono<HonoContextType>().post(
-					'/signout',
-					...signoutController,
-				);
+				app = new Hono<HonoContextType>().post('/test', ...signoutController);
 
 				vi.clearAllMocks();
 			});
@@ -27,7 +24,7 @@ describe('AUTH', () => {
 
 					const spySignout = vi.spyOn(getService('session'), 'signout');
 
-					const res = await app.request('http://localhost/signout', {
+					const res = await app.request('http://localhost/test', {
 						method: 'POST',
 					});
 
