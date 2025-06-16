@@ -1,14 +1,10 @@
-import type { Context, Next } from 'hono';
 import { getCookie } from 'hono/cookie';
 import { setCookie } from '../../../libs/cookie.lib';
+import { factory } from '../../../libs/factory.lib';
 import { getService } from '../../../libs/ioc.lib';
-import type { HonoContextType } from '../../../types/context.type';
 import { NotAuthenticatedError } from '../../core/types/errors.type';
 
-export const guardMiddleware = async (
-	c: Context<HonoContextType>,
-	next: Next,
-) => {
+export const guardMiddleware = factory.createMiddleware(async (c, next) => {
 	const sessionService = getService('session');
 	const jwt = getCookie(c, 'aurell_session_jwt');
 
@@ -33,4 +29,4 @@ export const guardMiddleware = async (
 	} catch {
 		throw new NotAuthenticatedError('Could not validate the jwt token');
 	}
-};
+});
