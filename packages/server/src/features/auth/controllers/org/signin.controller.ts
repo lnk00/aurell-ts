@@ -6,8 +6,8 @@ import { getService } from '../../../../libs/ioc.lib';
 import { Validate } from '../../../../libs/validator.lib';
 
 const orgSigninSchema = z.object({
-	id: z.string('id is required in the request body'),
-	token: z.string('token is required in the request body'),
+	id: z.string('an id is required in the request body'),
+	token: z.string('a token is required in the request body'),
 });
 
 export const orgSigninController = factory.createHandlers(
