@@ -18,7 +18,7 @@ export class DatabaseError extends HTTPException {
 export class OpenbankingError extends HTTPException {
 	constructor(message: string, status: ContentfulStatusCode = 400) {
 		super(status, { message });
-		this.name = 'OpenbankingError';
+		this.name = 'OpenBankingError';
 	}
 }
 
